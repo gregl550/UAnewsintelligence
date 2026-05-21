@@ -5,6 +5,7 @@ import re
 import time
 
 import anthropic
+import httpx
 
 from config import CLAUDE_MODEL, MAX_ARTICLES_PER_CALL, RELEVANCE_KEYWORDS
 
@@ -170,7 +171,6 @@ def _call_claude(articles: list[dict], client: anthropic.Anthropic) -> dict:
             }
         ],
         messages=[{"role": "user", "content": user_msg}],
-        timeout=120.0,
     )
 
     usage = response.usage
@@ -188,7 +188,12 @@ def _call_claude(articles: list[dict], client: anthropic.Anthropic) -> dict:
 
 
 def analyze_articles(articles: list[dict]) -> dict:
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    client = anthropic.Anthropic(
+        api_key=os.environ["ANTHROPIC_API_KEY"],
+        http_client=httpx.Client(
+            timeout=httpx.Timeout(connect=30.0, read=120.0, write=30.0, pool=30.0)
+        ),
+    )
 
     # Pre-filter for relevance, then cap at max batch size
     filtered = _pre_filter(articles)
@@ -208,13 +213,12 @@ def analyze_articles(articles: list[dict]) -> dict:
             time.sleep(2 ** attempt)
         except anthropic.APITimeoutError:
             logger.error(
-                f"  Claude API timed out after 120s (attempt {attempt + 1}/3)"
+                f"  Claude API timed out (connect=30s, read=120s) — attempt {attempt + 1}/3"
             )
             if attempt == 2:
                 raise
-            wait = 15 * (attempt + 1)
-            logger.info(f"  Waiting {wait}s before retry")
-            time.sleep(wait)
+            logger.info("  Waiting 5s before retry")
+            time.sleep(5)
         except anthropic.RateLimitError:
             wait = 30 * (attempt + 1)
             logger.warning(f"  Rate limited — waiting {wait}s")

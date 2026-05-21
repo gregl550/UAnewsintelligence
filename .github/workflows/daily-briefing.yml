@@ -10,7 +10,7 @@ on:
 jobs:
   briefing:
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # Kill the job if it somehow hangs beyond 10 min
+    timeout-minutes: 30  # Kill the job if it somehow hangs beyond 30 min
 
     steps:
       - name: Checkout code
