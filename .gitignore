@@ -1,0 +1,21 @@
+# Environment — never commit credentials
+.env
+
+# Runtime output
+logs/
+__pycache__/
+*.pyc
+*.pyo
+
+# Local virtualenv
+venv/
+.venv/
+
+# Claude Code local settings
+.claude/
+
+# macOS
+.DS_Store
+
+# launchd plist (Mac-only scheduler, not needed on GitHub)
+*.plist

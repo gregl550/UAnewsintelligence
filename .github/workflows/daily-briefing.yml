@@ -1,0 +1,35 @@
+name: Daily Intelligence Briefing
+
+on:
+  schedule:
+    # 10:00 UTC = 6:00 AM EDT (UTC-4, Mar–Nov)
+    # Runs 5:00 AM EST during winter months (UTC-5, Nov–Mar)
+    - cron: '0 10 * * 1-5'
+  workflow_dispatch:  # Allows manual "Run workflow" button in GitHub UI
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10  # Kill the job if it somehow hangs beyond 10 min
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run briefing agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAILS: ${{ secrets.RECIPIENT_EMAILS }}
+          SENDER_NAME: ${{ secrets.SENDER_NAME }}
+        run: python main.py
