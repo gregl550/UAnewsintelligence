@@ -4,7 +4,7 @@ import random
 import re
 import smtplib
 import textwrap
-from datetime import datetime
+from datetime import date, datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -105,6 +105,226 @@ STOIC_QUOTES: list[tuple[str, str]] = [
     # Cleanthes
     ("Lead me, O Zeus, and lead me, Destiny, to that goal long ago assigned to me. I'll follow and not falter; if my will prove weak and craven, still I'll follow on.", "Cleanthes"),
     ("Seek not good from without; seek it from within yourselves, or you will never find it.", "Cleanthes"),
+]
+
+# ── Knicks fun facts — displayed May 27 through June 15, 2026 ─────────────────
+# Index 0 = May 27, index 19 = June 15
+
+KNICKS_FACTS: list[tuple[str, str]] = [
+    # 0 — May 27
+    (
+        "On May 12, 1985, the NBA held its first-ever Draft Lottery — designed so all "
+        "non-playoff teams had a shot at the top pick. The New York Knicks, fresh off a "
+        "24-58 season, won. They used the selection on Georgetown center Patrick Ewing "
+        "on June 18, 1985, and within three seasons turned into a perennial Eastern Conference "
+        "force. Meanwhile, the Boston Celtics had won 63 games that year — and would spend "
+        "the next decade watching Ewing torment them every spring.",
+        "1985 NBA Draft Lottery",
+    ),
+    # 1 — May 28
+    (
+        "Patrick Ewing played 15 seasons as a Knick (1985–2000) and retired as the "
+        "franchise's all-time leader in points (18,860), rebounds, blocked shots, and "
+        "games played. He earned 11 All-Star selections in a Knicks uniform, was named "
+        "to the NBA's 50 Greatest Players list in 1996, and guided New York to the "
+        "playoffs in 13 of his 15 seasons. His No. 33 was retired in 2003 — the most "
+        "decorated number in franchise history.",
+        "Patrick Ewing Era, 1985–2000",
+    ),
+    # 2 — May 29
+    (
+        "Pat Riley's 1993–94 Knicks went 57-25 — the best record in the Eastern Conference "
+        "— in a season defined by suffocating defense and collective will. With Michael Jordan "
+        "retired, they bulldozed through New Jersey, outlasted the Chicago Bulls in seven games, "
+        "and edged Indiana in seven more before losing to Hakeem Olajuwon's Houston Rockets "
+        "in a seven-game Finals. The Knicks held opponents to fewer than 96 points per game, "
+        "second-best in the league. It remains the franchise's last Finals appearance.",
+        "1993–94 Knicks Season",
+    ),
+    # 3 — May 30
+    (
+        "Game 7 of the 1994 NBA Finals came down to 48 minutes in Houston. What stood "
+        "between the Knicks and their second-ever championship: shooting guard John Starks "
+        "went 2-for-18 from the field, 0-for-8 from three-point range, in the deciding game. "
+        "Patrick Ewing scored 17 with 8 rebounds. The Knicks lost 90-84. Starks was so haunted "
+        "by the performance that he produced a documentary about it 16 years later. Hakeem "
+        "Olajuwon averaged 26.9 points and 9.1 rebounds for the series.",
+        "1994 NBA Finals, Game 7",
+    ),
+    # 4 — May 31
+    (
+        "On May 16, 1999, with the Knicks trailing Miami 77-76 in Game 5 of the first "
+        "round, Allan Houston drove the baseline with 4.5 seconds left. His running layup "
+        "bounced off the front of the rim, rolled around slowly, and fell through with "
+        "0.8 seconds remaining. Knicks 78, Heat 77. The shot — one of the most replayed "
+        "in franchise history — eliminated the No. 1-seeded Heat and launched the "
+        "Knicks on a run to the NBA Finals.",
+        "May 16, 1999 — Allan Houston's Shot",
+    ),
+    # 5 — June 1
+    (
+        "The 1999 Knicks are still the only No. 8 seed in NBA history to reach the Finals. "
+        "Playing in a lockout-shortened 50-game season, they finished 27-23, then eliminated "
+        "the top-seeded Miami Heat, the Atlanta Hawks, and the No. 1 overall seed Indiana "
+        "Pacers — going 11-4 in the postseason before losing to San Antonio 4-1 in the Finals. "
+        "That same year, the Boston Celtics went 19-31 and didn't sniff the playoffs. "
+        "Different franchises; different springs.",
+        "1999 NBA Playoffs",
+    ),
+    # 6 — June 2
+    (
+        "In December 1997, Latrell Sprewell was suspended for the entire 1997–98 season — "
+        "effectively exiled from the NBA — after choking Golden State Warriors coach P.J. "
+        "Carlesimo during practice. The Knicks acquired him in a January 1999 trade. Six "
+        "months later he was starting in the NBA Finals, scoring 20 points in Game 4 against "
+        "San Antonio, and became one of the most beloved players in MSG history. His "
+        "redemption arc — from league pariah to playoff hero in under two years — remains "
+        "one of the most improbable in the sport.",
+        "Latrell Sprewell, 1999",
+    ),
+    # 7 — June 3
+    (
+        "On July 1, 2010 — the first moment NBA free agency opened — the Knicks signed "
+        "Amar'e Stoudemire to a five-year, $100 million contract, the largest commitment "
+        "the franchise had made in years. In his debut season, Stoudemire averaged 25.3 "
+        "points and 8.2 rebounds per game, earned an All-Star selection, and gave Knicks fans "
+        "their most compelling offensive centerpiece since Patrick Ewing. His arrival set the "
+        "stage for the Carmelo Anthony trade seven months later, signaling New York was "
+        "serious about rebuilding.",
+        "Summer 2010, Knicks Free Agency",
+    ),
+    # 8 — June 4
+    (
+        "On February 22, 2011, the Knicks acquired Carmelo Anthony and Chauncey Billups "
+        "from Denver, sending Wilson Chandler, Raymond Felton, Danilo Gallinari, Timofey "
+        "Mozgov, and draft compensation in return. Carmelo scored 27 points in his debut "
+        "four days later. The cost was real — Gallinari became a quality starter for a "
+        "decade — but the Knicks got exactly what they wanted: a top-5 scorer in his "
+        "prime at Madison Square Garden. Over six-plus seasons, Carmelo posted 10,186 "
+        "points in blue-and-orange — second only to Ewing.",
+        "February 2011, The Carmelo Trade",
+    ),
+    # 9 — June 5
+    (
+        "On January 24, 2014, Carmelo Anthony scored 62 points against the Charlotte "
+        "Bobcats at Madison Square Garden — a franchise record that still stands. He reached "
+        "the mark in three quarters going 23-for-35, then sat out the fourth with the Knicks "
+        "leading by 30. The previous Knicks single-game record was 60, set by Bernard King "
+        "on Christmas Day 1984 — the season before Patrick Ewing arrived. Carmelo erased it "
+        "by two points, in three quarters, against a team that would finish 7-59.",
+        "January 24, 2014 — Carmelo's 62",
+    ),
+    # 10 — June 6
+    (
+        "In early February 2012, Jeremy Lin was an undrafted 23-year-old who had been "
+        "waived by Golden State and Houston and was sleeping on his brother's couch in "
+        "Manhattan. With Carmelo Anthony and Amar'e Stoudemire both sidelined by injuries, "
+        "the Knicks had little choice but to start him. On February 4, Lin scored 25 "
+        "points with 7 assists against the New Jersey Nets. Linsanity — one of the most "
+        "electric individual runs in NBA history — had begun.",
+        "February 4, 2012 — Linsanity Begins",
+    ),
+    # 11 — June 7
+    (
+        "Over his first seven starts in February 2012, Jeremy Lin averaged 24.4 points "
+        "and 9.1 assists per game — numbers that ranked among the best point guard "
+        "stretches in the league that month. On February 10, he scored 38 against Kobe "
+        "Bryant's Los Angeles Lakers. MSG sold out every game during the streak. In two "
+        "weeks, Lin appeared on two Sports Illustrated covers and was the most-searched "
+        "person on Google globally. The Knicks went 9-3 in his starts before he tore "
+        "his meniscus in March, ending the dream.",
+        "February–March 2012, Linsanity",
+    ),
+    # 12 — June 8
+    (
+        "Madison Square Garden — 'The World's Most Famous Arena' — has hosted Knicks "
+        "basketball since 1968 and operates at a capacity of 19,812 for NBA games. In "
+        "the years before the COVID-19 pandemic disrupted the 2019–20 season, the Knicks "
+        "maintained one of the longest active home sellout streaks in the NBA, selling "
+        "out games even through their darkest rebuilding winters. Premium floor seats at "
+        "MSG have commanded the highest prices in the league for most of the past decade "
+        "— a testament to a fan base that refuses to look away.",
+        "Madison Square Garden",
+    ),
+    # 13 — June 9
+    (
+        "In the first round of the 2013 playoffs, Carmelo Anthony averaged 28.3 points "
+        "as the Knicks eliminated the Boston Celtics in six games. It turned out to be "
+        "the final playoff series of Boston's Kevin Garnett–Paul Pierce–Ray Allen era. "
+        "Within weeks, the Celtics traded Pierce and Garnett to Brooklyn for a package "
+        "of picks — a deal that aged catastrophically for the Nets (no title, no picks) "
+        "while Boston used those assets to draft Jaylen Brown and build the 2024 NBA "
+        "champion Celtics. The Knicks didn't just beat Boston — they accidentally "
+        "triggered their rival's dynasty.",
+        "2013 First Round — Knicks def. Celtics 4-2",
+    ),
+    # 14 — June 10
+    (
+        "After eight consecutive missed playoffs — the longest drought in franchise history "
+        "since the 1970s — the Knicks returned to the postseason in 2021 under first-year "
+        "head coach Tom Thibodeau, finishing 41-31. Julius Randle, previously written off "
+        "by New Orleans and the Lakers, won the NBA's Most Improved Player award after "
+        "averaging 24.1 points, 10.2 rebounds, and 6.0 assists — a stunning leap that "
+        "made him an All-Star. RJ Barrett averaged 17.6 points at age 20. MSG buzzed "
+        "with playoff energy for the first time in eight years.",
+        "2020–21 Knicks Season",
+    ),
+    # 15 — June 11
+    (
+        "In July 2022, Jalen Brunson agreed to a four-year, $104 million deal with the "
+        "Knicks — widely viewed as well below market value at a time when comparable "
+        "guards were signing for $150+ million. The connection was partly personal: "
+        "Brunson's father Rick had been part of the Knicks organization for years. "
+        "In his first season, Brunson averaged 24.0 points and 6.2 assists, immediately "
+        "making New York one of the East's most cohesive offensive teams. He proved to be "
+        "the best value contract in the NBA that offseason.",
+        "July 2022 — Jalen Brunson Signs",
+    ),
+    # 16 — June 12
+    (
+        "The 2023–24 Knicks went 50-32 — their first 50-win season since 1996–97 and the "
+        "second-best record in the Eastern Conference. Jalen Brunson averaged 28.7 points "
+        "and 6.7 assists, earning All-NBA Second Team honors — the most by a Knick since "
+        "Carmelo Anthony's prime. In the first round, Brunson scored 41 in the series-"
+        "clinching win over Philadelphia. The Garden sold out every home game for the "
+        "second straight season, and the expectation level in New York shifted from "
+        "'make the playoffs' to 'make a run.'",
+        "2023–24 Knicks Season",
+    ),
+    # 17 — June 13
+    (
+        "In January 2024, the Knicks traded RJ Barrett and Immanuel Quickley to Toronto "
+        "for OG Anunoby, one of the NBA's premier two-way wings. Eight months later, they "
+        "acquired Karl-Anthony Towns from Minnesota — a seven-time All-Star — for Julius "
+        "Randle and Donte DiVincenzo, then added Mikal Bridges from Brooklyn. In the span "
+        "of 12 months, the Knicks assembled arguably the most talented roster the franchise "
+        "had built since the Ewing years, with Brunson, Bridges, Anunoby, and Towns "
+        "forming the core.",
+        "2024 Roster Construction",
+    ),
+    # 18 — June 14
+    (
+        "The Knicks' most consequential draft moment: May 12, 1985 — winning the first-"
+        "ever NBA lottery to select Patrick Ewing. Their most painful: June 26, 2003, "
+        "holding the 8th pick and selecting power forward Mike Sweetney. At No. 1 that "
+        "night: LeBron James. No. 3: Carmelo Anthony. No. 4: Chris Bosh. No. 5: Dwyane "
+        "Wade. The Knicks eventually got Carmelo — in February 2011 — but it cost them "
+        "Gallinari, Felton, Mozgov, and multiple first-round picks. Sometimes the draft "
+        "lottery is cheaper.",
+        "Knicks Draft History",
+    ),
+    # 19 — June 15
+    (
+        "For most of the past 25 years, being a Knicks fan meant watching other teams "
+        "win while MSG hosted mediocre basketball at premium prices. What changed: patient "
+        "reconstruction starting in 2019, Tom Thibodeau's culture overhaul, the under-"
+        "market signing of Jalen Brunson, and a run of aggressive trades in 2024 that "
+        "brought in OG Anunoby, Karl-Anthony Towns, and Mikal Bridges. For the first "
+        "time since the Ewing era, a Knicks championship run felt genuinely plausible — "
+        "and Boston's 2024 title, built on picks extracted from Brooklyn's failed dynasty "
+        "attempt, began the day Carmelo's Knicks eliminated the Celtics in 2013.",
+        "The Knicks' Window, 2024–Present",
+    ),
 ]
 
 # ── Shared style values ────────────────────────────────────────────────────────
@@ -336,7 +556,25 @@ def _finance_corner_section(items: list[dict]) -> str:
 
 
 def build_html(briefing: dict, article_count: int, run_date: str, sources: list[str]) -> str:
-    stoic_text, stoic_author = random.choice(STOIC_QUOTES)
+    _today = datetime.now().date()
+    _knicks_start = date(2026, 5, 27)
+    _knicks_end   = date(2026, 6, 15)
+    if _knicks_start <= _today <= _knicks_end:
+        _fact_text, _fact_attr = KNICKS_FACTS[(_today - _knicks_start).days]
+        quote_inner = (
+            f'<p style="font-style:italic;color:#e2e8f0;font-size:13px;line-height:1.65;'
+            f'margin:0;font-weight:400;font-family:{_FONT}">{_fact_text}</p>'
+            f'<div style="color:#f07030;font-size:11px;margin-top:7px;font-weight:400;'
+            f'font-family:{_FONT}">&#8212; {_fact_attr}</div>'
+        )
+    else:
+        stoic_text, stoic_author = random.choice(STOIC_QUOTES)
+        quote_inner = (
+            f'<p style="font-style:italic;color:#e2e8f0;font-size:13px;line-height:1.65;'
+            f'margin:0;font-weight:400;font-family:{_FONT}">&#8220;{stoic_text}&#8221;</p>'
+            f'<div style="color:#f07030;font-size:11px;margin-top:7px;font-weight:400;'
+            f'font-family:{_FONT}">&#8212; {stoic_author}</div>'
+        )
     exec_summary = briefing.get("executive_summary", "No summary available.")
     key_themes   = briefing.get("key_themes", [])
     top_stories  = briefing.get("top_stories", [])
@@ -406,10 +644,9 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
     <div style="color:#6b7280;font-size:12px;margin-top:4px;font-family:{_FONT}">{run_date} &bull; {article_count} articles analyzed</div>
   </div>
 
-  <!-- Stoic quote -->
+  <!-- Daily quote / Knicks fact -->
   <div style="background:#1a1a2e;padding:16px 32px 14px">
-    <p style="font-style:italic;color:#e2e8f0;font-size:13px;line-height:1.65;margin:0;font-weight:400;font-family:{_FONT}">&#8220;{stoic_text}&#8221;</p>
-    <div style="color:#f07030;font-size:11px;margin-top:7px;font-weight:400;font-family:{_FONT}">&#8212; {stoic_author}</div>
+    {quote_inner}
   </div>
 
   <!-- Executive summary -->

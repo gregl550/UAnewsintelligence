@@ -2,9 +2,8 @@ name: Daily Intelligence Briefing
 
 on:
   schedule:
-    # 10:00 UTC = 6:00 AM EDT (UTC-4, Mar–Nov)
-    # Runs 5:00 AM EST during winter months (UTC-5, Nov–Mar)
-    - cron: '0 10 * * 1-5'
+    # 11:00 UTC = 7:00 AM EDT (UTC-4, Mar–Nov) / 6:00 AM EST (UTC-5, Nov–Mar)
+    - cron: '0 11 * * 1-5'
   workflow_dispatch:  # Allows manual "Run workflow" button in GitHub UI
 
 jobs:
