@@ -17,6 +17,7 @@ RSS_FEEDS = {
     "MNTN Press":         "https://mountain.com/press/feed/",
     # Competitor Google News monitors
     "Vibe.co News":       "https://news.google.com/rss/search?q=vibe.co+CTV+advertising&hl=en-US&gl=US&ceid=US:en",
+    "Vibe.co Broad News": "https://news.google.com/rss/search?q=Vibe.co+streaming+TV+advertising&hl=en-US&gl=US&ceid=US:en",
     "MNTN News":          "https://news.google.com/rss/search?q=MNTN+Performance+TV+CTV+advertising&hl=en-US&gl=US&ceid=US:en",
     "MNTN Mountain News": "https://news.google.com/rss/search?q=mountain.com+advertising&hl=en-US&gl=US&ceid=US:en",
     # UK market
@@ -35,6 +36,8 @@ RELEVANCE_KEYWORDS = [
     "Ryan Reynolds MNTN", "Performance TV MNTN",
     # Vibe.co
     "Vibe.co", "Vibe CTV", "vibeads", "vibe.co ads",
+    "Vibe.co research", "Vibe.co case study", "Vibe CTV research",
+    "Vibe advertising", "vibe.co blog",
     # Other competitors
     "Tatari", "Roku", "Amazon", "Fire TV",
     "NBCU", "NBCUniversal", "Peacock", "Comcast",

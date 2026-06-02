@@ -33,7 +33,8 @@ ANALYSIS PRIORITIES
      ua_implications for MNTN news must be specific and actionable — address the direct impact on Universal Ads' competitive positioning in the self-serve CTV market, particularly around the SMB and DTC advertiser segments. Name what Universal Ads should do differently, watch, or accelerate in response. Never write generic statements like "monitor closely."
 
    • Vibe.co — emerging self-serve CTV challenger targeting similar SMB and performance-focused advertiser segments
-     Flag and analyze: product launches, pricing changes, new publisher partnerships, funding rounds, executive hires, customer wins, agency partnerships, and any direct comparison of Vibe.co to Universal Ads
+     ALWAYS surface Vibe.co content in competitive_intel.vibe_co whenever it appears in the feed — this is a standing instruction that overrides normal relevance scoring. Include blog posts, research reports, case studies, product announcements, thought leadership pieces, and executive commentary, even if the relevance score would otherwise be low. If a Vibe.co article is in the feed, it goes in the Vibe.co section — no exceptions.
+     Flag and analyze: product launches, pricing changes, new publisher partnerships, funding rounds, executive hires, customer wins, agency partnerships, blog posts, research publications, case studies, and any direct comparison of Vibe.co to Universal Ads
      ua_implications for Vibe.co news must be specific and actionable — address the direct impact on Universal Ads' competitive positioning in the self-serve CTV market. Name what Universal Ads should do differently, watch, or accelerate in response. Never write generic statements like "monitor closely."
 
    • Tatari — CTV measurement and planning platform with buying capabilities
@@ -123,6 +124,7 @@ Rules:
 - finance_corner is capped at 4 items maximum. Only include items with actual financial figures or meaningful analyst commentary
 - Each section list may be empty [] if no relevant articles exist
 - Be specific in ua_implications — avoid generic statements
+- Vibe.co override: any article from a Vibe.co source or mentioning Vibe.co must appear in competitive_intel.vibe_co regardless of its relevance score — do not omit it
 - If zero articles are relevant, still return valid JSON with empty lists and a summary explaining it was a quiet news day"""
 
 
@@ -141,10 +143,22 @@ def _format_articles(articles: list[dict]) -> str:
 
 
 def _pre_filter(articles: list[dict]) -> list[dict]:
-    """Keep articles that contain at least one relevance keyword, fall back to all if too few pass."""
+    """Keep articles that contain at least one relevance keyword, fall back to all if too few pass.
+
+    Vibe.co articles are always kept regardless of keyword match — the source name
+    or URL is sufficient to guarantee inclusion.
+    """
     kw_lower = [k.lower() for k in RELEVANCE_KEYWORDS]
 
+    def _is_vibe(a: dict) -> bool:
+        return (
+            "vibe" in a.get("source", "").lower()
+            or "vibe.co" in a.get("url", "").lower()
+        )
+
     def _is_relevant(a: dict) -> bool:
+        if _is_vibe(a):
+            return True
         haystack = (a["title"] + " " + a["content"]).lower()
         return any(k in haystack for k in kw_lower)
 
