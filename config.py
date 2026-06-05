@@ -20,6 +20,9 @@ RSS_FEEDS = {
     "Vibe.co Broad News": "https://news.google.com/rss/search?q=Vibe.co+streaming+TV+advertising&hl=en-US&gl=US&ceid=US:en",
     "MNTN News":          "https://news.google.com/rss/search?q=MNTN+Performance+TV+CTV+advertising&hl=en-US&gl=US&ceid=US:en",
     "MNTN Mountain News": "https://news.google.com/rss/search?q=mountain.com+advertising&hl=en-US&gl=US&ceid=US:en",
+    "Tatari News":        "https://news.google.com/rss/search?q=Tatari+CTV+advertising&hl=en-US&gl=US&ceid=US:en",
+    "Roku Ads News":      "https://news.google.com/rss/search?q=Roku+advertising+self-serve&hl=en-US&gl=US&ceid=US:en",
+    "Amazon Streaming TV News": "https://news.google.com/rss/search?q=Amazon+streaming+TV+ads&hl=en-US&gl=US&ceid=US:en",
     # UK market
     "Advanced Television": "https://advanced-television.com/feed",
     "Mediatel News":       "https://mediatel.co.uk/newsline/?feed=rss2",

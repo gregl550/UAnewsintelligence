@@ -99,6 +99,7 @@ Return ONLY a single valid JSON object — no markdown fences, no explanation te
     }
   ],
   "competitive_intel": {
+    "landscape": "One sentence covering all tracked competitors — who had news and who was quiet. Example: 'MNTN: 2 items; Vibe.co: 1 item; Tatari, Roku, Amazon, NBCU: no news today.'",
     "mntn":   [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
     "vibe_co":[{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
     "tatari": [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
@@ -124,6 +125,8 @@ Rules:
 - finance_corner is capped at 4 items maximum. Only include items with actual financial figures or meaningful analyst commentary
 - Each section list may be empty [] if no relevant articles exist
 - Be specific in ua_implications — avoid generic statements
+- Competitive intel balance: each competitor's list is capped at 2 items. If a competitor has more than 2 relevant articles, keep the 2 most significant. No single competitor should dominate the section
+- competitive_intel.landscape is required — always populate it with a single sentence listing every tracked competitor (mntn, vibe_co, tatari, roku, amazon, nbcu) and whether they had news or were quiet that day. Include this even when most competitors had no activity
 - Vibe.co override: any article from a Vibe.co source or mentioning Vibe.co must appear in competitive_intel.vibe_co regardless of its relevance score — do not omit it
 - If zero articles are relevant, still return valid JSON with empty lists and a summary explaining it was a quiet news day"""
 

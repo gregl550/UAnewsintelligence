@@ -445,6 +445,18 @@ def _section_wrap(heading: str, body: str) -> str:
 
 def _comp_intel_html(comp: dict) -> str:
     sections = []
+
+    landscape = comp.get("landscape", "")
+    if landscape:
+        sections.append(
+            f'<div style="font-size:12px;color:#6b7280;line-height:1.5;'
+            f'margin-bottom:10px;padding:8px 10px;background:#fafafa;'
+            f'border-radius:4px;font-family:{_FONT}">'
+            f'<span style="font-weight:700;color:#9ca3af;text-transform:uppercase;'
+            f'font-size:10px;letter-spacing:.5px;margin-right:6px">Landscape</span>'
+            f'{landscape}</div>'
+        )
+
     for key, label in COMPETITOR_LABELS.items():
         items = comp.get(key, [])
         if not items:
