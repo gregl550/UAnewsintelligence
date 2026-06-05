@@ -4,8 +4,6 @@ on:
   schedule:
     # 11:00 UTC = 7:00 AM EDT (UTC-4, Mar–Nov) / 6:00 AM EST (UTC-5, Nov–Mar)
     - cron: '0 11 * * 1-5'
-    # 12:00 UTC = 8:00 AM EDT (UTC-4, Mar–Nov) — backup trigger if 11:00 run is delayed/skipped
-    - cron: '0 12 * * 1-5'
   workflow_dispatch:  # Allows manual "Run workflow" button in GitHub UI
 
 jobs:
