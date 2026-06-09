@@ -29,6 +29,11 @@ RSS_FEEDS = {
     "UK CTV News":         "https://news.google.com/rss/search?q=UK+CTV+advertising+Sky+AdSmart&hl=en-GB&gl=GB&ceid=GB:en",
     # Finance / earnings
     "CTV Earnings News":   "https://news.google.com/rss/search?q=CTV+advertising+earnings+revenue&hl=en-US&gl=US&ceid=US:en",
+    # UA ecosystem partner monitors
+    "Measured News":       "https://news.google.com/rss/search?q=Measured+marketing+attribution&hl=en-US&gl=US&ceid=US:en",
+    "LiveRamp News":       "https://news.google.com/rss/search?q=LiveRamp+advertising+data&hl=en-US&gl=US&ceid=US:en",
+    "Klaviyo News":        "https://news.google.com/rss/search?q=Klaviyo+marketing&hl=en-US&gl=US&ceid=US:en",
+    "Canva Ads News":      "https://news.google.com/rss/search?q=Canva+advertising&hl=en-US&gl=US&ceid=US:en",
 }
 
 # Keywords that boost relevance during pre-filtering (case-insensitive)
@@ -41,6 +46,11 @@ RELEVANCE_KEYWORDS = [
     "Vibe.co", "Vibe CTV", "vibeads", "vibe.co ads",
     "Vibe.co research", "Vibe.co case study", "Vibe CTV research",
     "Vibe advertising", "vibe.co blog",
+    # UA ecosystem partners
+    "Measured", "Haus", "Fairing", "Prescient", "Paramark", "INCRMNTL",
+    "WorkMagic", "Triple Whale", "Waymark", "Spaceback", "Canva", "Creatify",
+    "Marpipe", "Klaviyo", "LiveRamp", "TransUnion", "Experian", "Fospha",
+    "Northbeam", "Stella", "Adrsta.ai",
     # Other competitors
     "Tatari", "Roku", "Amazon", "Fire TV",
     "NBCU", "NBCUniversal", "Peacock", "Comcast",

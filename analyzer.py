@@ -62,6 +62,17 @@ ANALYSIS PRIORITIES
    CTV and streaming advertising news specific to the United Kingdom. Focus exclusively on CTV, streaming, and digital advertising — do not include general entertainment, programming, or non-advertising UK news. Key platforms to track: Sky (Sky Media, Sky AdSmart), Channel 4, ITV (ITVX), BBC iPlayer, Channel 5, BritBox, and other UK premium streaming/CTV platforms. Include Ofcom regulatory developments, UK-specific programmatic/addressable TV trends, and UK advertiser behaviour in streaming.
    Maximum 3 items in uk_market. Only include CTV/streaming/advertising stories.
 
+9. UA PARTNERS IN THE NEWS
+   Flag any news about Universal Ads' ecosystem partners. Track these companies specifically:
+   Measured, Haus, Fairing, Prescient, Paramark, INCRMNTL, WorkMagic, Triple Whale, Waymark,
+   Spaceback, Canva, Creatify, Marpipe, Klaviyo, LiveRamp, TransUnion, Experian, Fospha,
+   Northbeam, Stella, Adrsta.ai
+   For each item: name the partner exactly, write a brief headline, and provide a 1-2 sentence
+   insight on what the development means for the Universal Ads partnership or ecosystem (e.g.,
+   funding that deepens a partner's capabilities, product launches that benefit UA advertisers,
+   competitive pressure on the partner, new integrations). Only include items in an
+   advertising/marketing technology context — ignore references to these names in unrelated industries.
+
 8. MELISSA'S FINANCE CORNER
    Earnings and financial news for CTV and digital advertising companies. Track: Comcast, NBCUniversal, Meta, Alphabet/Google, Amazon, Roku, The Trade Desk, Snap, Pinterest, Netflix, Warner Bros Discovery, Paramount, Disney, and any other company reporting CTV or digital ad revenue.
    Signal types: quarterly earnings beats/misses, ad revenue figures, subscriber numbers with revenue context, CTV ad spend growth rates, guidance/forward-looking statements, analyst upgrades/downgrades, M&A with financial detail.
@@ -107,6 +118,9 @@ Return ONLY a single valid JSON object — no markdown fences, no explanation te
     "amazon": [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
     "nbcu":   [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}]
   },
+  "ua_partners": [
+    {"partner": "Measured", "headline": "...", "insight": "...", "url": "..."}
+  ],
   "partner_signals":   [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
   "advertiser_trends": [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
   "social_media":      [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
@@ -127,6 +141,7 @@ Rules:
 - Be specific in ua_implications — avoid generic statements
 - Competitive intel balance: each competitor's list is capped at 2 items. If a competitor has more than 2 relevant articles, keep the 2 most significant. No single competitor should dominate the section
 - competitive_intel.landscape is required — always populate it with a single sentence listing every tracked competitor (mntn, vibe_co, tatari, roku, amazon, nbcu) and whether they had news or were quiet that day. Include this even when most competitors had no activity
+- ua_partners may be empty [] if no partner news appears in the feed. When populated, each item must name the exact partner from the tracked list. Only include items in an advertising/marketing technology context
 - Vibe.co override: any article from a Vibe.co source or mentioning Vibe.co must appear in competitive_intel.vibe_co regardless of its relevance score — do not omit it
 - If zero articles are relevant, still return valid JSON with empty lists and a summary explaining it was a quiet news day"""
 

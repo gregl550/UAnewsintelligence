@@ -488,6 +488,61 @@ def _comp_intel_html(comp: dict) -> str:
     return f'<div style="padding:2px 32px 10px">{"".join(sections)}</div>'
 
 
+def _ua_partners_section(items: list[dict]) -> str:
+    header = (
+        f'<div style="background:#0d1b4b;padding:9px 32px">'
+        f'<h2 style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.6px;'
+        f'color:#fff;font-weight:700;font-family:{_FONT}">UA Partners in the News</h2>'
+        f'</div>'
+    )
+    if not items:
+        return (
+            f'<div style="background:#fff;margin-top:8px">'
+            f'{header}'
+            f'<p style="padding:12px 32px;color:#8895a7;font-size:13px;font-family:{_FONT}">'
+            f'No partner news today.</p>'
+            f'</div>'
+        )
+
+    rows = ""
+    for idx, item in enumerate(items):
+        partner  = item.get("partner", "")
+        headline = item.get("headline", "")
+        insight  = item.get("insight", "")
+        url      = item.get("url", "")
+        border   = "none" if idx == len(items) - 1 else "1px solid #f0f4ff"
+
+        label = (
+            f'<span style="display:inline-block;padding:2px 7px;border-radius:3px;'
+            f'font-size:10px;font-weight:700;background:#1e3a8a;color:#fff;'
+            f'text-transform:uppercase;letter-spacing:.3px;margin-right:8px;'
+            f'vertical-align:middle;font-family:{_FONT}">{partner}</span>'
+        )
+        hed = (
+            f'<a href="{url}" style="font-size:13px;font-weight:600;color:#1a202c;'
+            f'text-decoration:none;vertical-align:middle;font-family:{_FONT}">{headline}</a>'
+            if url else
+            f'<span style="font-size:13px;font-weight:600;color:#1a202c;'
+            f'vertical-align:middle;font-family:{_FONT}">{headline}</span>'
+        )
+        insight_html = (
+            f'<div style="font-size:12px;color:#6b7280;line-height:1.4;'
+            f'margin-top:5px;font-family:{_FONT}">'
+            f'<span style="font-weight:700;color:#9ca3af;text-transform:uppercase;'
+            f'font-size:10px;letter-spacing:.4px;margin-right:5px">Partnership signal:</span>'
+            f'{insight}</div>'
+        ) if insight else ""
+
+        rows += (
+            f'<div style="padding:10px 32px;border-bottom:{border}">'
+            f'<div style="line-height:1.5">{label}{hed}</div>'
+            f'{insight_html}'
+            f'</div>'
+        )
+
+    return f'<div style="background:#fff;margin-top:8px">{header}{rows}</div>'
+
+
 def _insight_list_html(items: list[dict]) -> str:
     if not items:
         return (
@@ -676,6 +731,9 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
   {_section_wrap("Competitive Intelligence Detail",
     _comp_intel_html(briefing.get("competitive_intel", {}))
   )}
+
+  <!-- UA Partners in the News -->
+  {_ua_partners_section(briefing.get("ua_partners", []))}
 
   <!-- Finance Corner -->
   {_finance_corner_section(briefing.get("finance_corner", []))}
