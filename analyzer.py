@@ -143,7 +143,8 @@ Rules:
 - competitive_intel.landscape is required — always populate it with a single sentence listing every tracked competitor (mntn, vibe_co, tatari, roku, amazon, nbcu) and whether they had news or were quiet that day. Include this even when most competitors had no activity
 - ua_partners may be empty [] if no partner news appears in the feed. When populated, each item must name the exact partner from the tracked list. Only include items in an advertising/marketing technology context
 - Vibe.co override: any article from a Vibe.co source or mentioning Vibe.co must appear in competitive_intel.vibe_co regardless of its relevance score — do not omit it
-- If zero articles are relevant, still return valid JSON with empty lists and a summary explaining it was a quiet news day"""
+- If zero articles are relevant, still return valid JSON with empty lists and a summary explaining it was a quiet news day
+- Do not repeat stories that appeared in yesterday's briefing. If a story was covered yesterday, skip it unless there is a significant new development (new data, major follow-up, meaningfully changed situation)"""
 
 
 def _format_articles(articles: list[dict]) -> str:
@@ -160,7 +161,7 @@ def _format_articles(articles: list[dict]) -> str:
     return "\n\n".join(lines)
 
 
-def _pre_filter(articles: list[dict]) -> list[dict]:
+def _pre_filter(articles: list[dict], seen_urls: set[str] | None = None) -> list[dict]:
     """Keep articles that contain at least one relevance keyword, fall back to all if too few pass.
 
     Vibe.co articles are always kept regardless of keyword match — the source name
@@ -182,14 +183,24 @@ def _pre_filter(articles: list[dict]) -> list[dict]:
 
     filtered = [a for a in articles if _is_relevant(a)]
     # Fall back to all articles only if very few pass the filter
-    return filtered if len(filtered) >= 5 else articles
+    candidates = filtered if len(filtered) >= 5 else articles
+    # Strip articles already covered in yesterday's briefing
+    if seen_urls:
+        before = len(candidates)
+        candidates = [a for a in candidates if a.get("url") not in seen_urls]
+        logger.info(f"  Dedup removed {before - len(candidates)} articles seen yesterday")
+    return candidates
 
 
-def _call_claude(articles: list[dict], client: anthropic.Anthropic) -> dict:
+def _call_claude(articles: list[dict], client: anthropic.Anthropic, prev_headlines: list[str] | None = None) -> dict:
     articles_text = _format_articles(articles)
+    prev_context = ""
+    if prev_headlines:
+        headlines_list = "\n".join(f"- {h}" for h in prev_headlines)
+        prev_context = f"\n\nYESTERDAY'S TOP STORIES (do not repeat these angles):\n{headlines_list}\n"
     user_msg = (
         f"Analyze these {len(articles)} articles published in the past 24 hours "
-        f"and return your JSON briefing:\n\n{articles_text}"
+        f"and return your JSON briefing:{prev_context}\n\n{articles_text}"
     )
 
     response = client.messages.create(
@@ -219,7 +230,7 @@ def _call_claude(articles: list[dict], client: anthropic.Anthropic) -> dict:
     return json.loads(raw)
 
 
-def analyze_articles(articles: list[dict]) -> dict:
+def analyze_articles(articles: list[dict], seen_urls: set[str] | None = None, prev_headlines: list[str] | None = None) -> dict:
     client = anthropic.Anthropic(
         api_key=os.environ["ANTHROPIC_API_KEY"],
         http_client=httpx.Client(
@@ -227,8 +238,8 @@ def analyze_articles(articles: list[dict]) -> dict:
         ),
     )
 
-    # Pre-filter for relevance, then cap at max batch size
-    filtered = _pre_filter(articles)
+    # Pre-filter for relevance, deduplicate against yesterday, then cap at max batch size
+    filtered = _pre_filter(articles, seen_urls=seen_urls)
     if len(filtered) > MAX_ARTICLES_PER_CALL:
         logger.info(f"  Capping from {len(filtered)} to {MAX_ARTICLES_PER_CALL} articles")
         filtered = filtered[:MAX_ARTICLES_PER_CALL]
@@ -237,7 +248,7 @@ def analyze_articles(articles: list[dict]) -> dict:
 
     for attempt in range(3):
         try:
-            return _call_claude(filtered, client)
+            return _call_claude(filtered, client, prev_headlines=prev_headlines)
         except json.JSONDecodeError as exc:
             logger.error(f"  JSON parse failed (attempt {attempt + 1}): {exc}")
             if attempt == 2:

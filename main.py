@@ -5,7 +5,7 @@ import json
 import logging
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -33,6 +33,39 @@ def _check_env() -> None:
         logger.error(f"Missing required env vars: {', '.join(missing)}")
         logger.error("Copy .env.example to .env and fill in your credentials.")
         sys.exit(1)
+
+
+def _load_previous_briefing() -> tuple[set[str], list[str]]:
+    archive_dir = Path(__file__).parent / "logs" / "archive"
+    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    fname = archive_dir / f"briefing_{yesterday}.json"
+    if not fname.exists():
+        logger.info("  No previous briefing found — proceeding without deduplication")
+        return set(), []
+    try:
+        with open(fname) as f:
+            data = json.load(f)
+        briefing = data.get("briefing", {})
+        seen_urls: set[str] = set()
+        for story in briefing.get("top_stories", []):
+            if story.get("url"):
+                seen_urls.add(story["url"])
+        ci = briefing.get("competitive_intel", {})
+        for competitor_items in ci.values():
+            if isinstance(competitor_items, list):
+                for item in competitor_items:
+                    if item.get("url"):
+                        seen_urls.add(item["url"])
+        for section in ["partner_signals", "advertiser_trends", "social_media", "uk_market", "policy_regulation", "finance_corner", "ua_partners"]:
+            for item in briefing.get(section, []):
+                if item.get("url"):
+                    seen_urls.add(item["url"])
+        prev_headlines = [s["title"] for s in briefing.get("top_stories", []) if s.get("title")]
+        logger.info(f"  Loaded previous briefing: {len(seen_urls)} seen URLs, {len(prev_headlines)} top headlines")
+        return seen_urls, prev_headlines
+    except Exception as exc:
+        logger.warning(f"  Could not load previous briefing: {exc}")
+        return set(), []
 
 
 def _save_backup(briefing: dict, article_count: int) -> None:
@@ -67,8 +100,9 @@ def main() -> None:
     logger.info("STEP 2 — Analyzing with Claude")
     from analyzer import analyze_articles
     import anthropic as _anthropic
+    seen_urls, prev_headlines = _load_previous_briefing()
     try:
-        briefing = analyze_articles(articles)
+        briefing = analyze_articles(articles, seen_urls=seen_urls, prev_headlines=prev_headlines)
     except _anthropic.APITimeoutError:
         logger.error("Claude API timed out on all 3 attempts (120s each). Exiting without sending email.")
         sys.exit(1)
