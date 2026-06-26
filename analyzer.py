@@ -182,8 +182,13 @@ def _pre_filter(articles: list[dict], seen_urls: set[str] | None = None) -> list
         return any(k in haystack for k in kw_lower)
 
     filtered = [a for a in articles if _is_relevant(a)]
+    logger.info(f"  Pre-filter: {len(filtered)}/{len(articles)} articles passed keyword relevance check")
     # Fall back to all articles only if very few pass the filter
-    candidates = filtered if len(filtered) >= 5 else articles
+    if len(filtered) >= 5:
+        candidates = filtered
+    else:
+        logger.info(f"  Pre-filter: fewer than 5 passed — falling back to all {len(articles)} articles")
+        candidates = articles
     # Strip articles already covered in yesterday's briefing
     if seen_urls:
         before = len(candidates)
@@ -234,7 +239,7 @@ def analyze_articles(articles: list[dict], seen_urls: set[str] | None = None, pr
     client = anthropic.Anthropic(
         api_key=os.environ["ANTHROPIC_API_KEY"],
         http_client=httpx.Client(
-            timeout=httpx.Timeout(connect=30.0, read=120.0, write=30.0, pool=30.0)
+            timeout=httpx.Timeout(connect=30.0, read=180.0, write=30.0, pool=30.0)
         ),
     )
 
