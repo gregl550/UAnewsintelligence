@@ -73,4 +73,4 @@ RELEVANCE_KEYWORDS = [
 
 CLAUDE_MODEL = "claude-sonnet-4-6"
 MAX_CONTENT_CHARS = 900   # per article before truncation
-MAX_ARTICLES_PER_CALL = 120
+MAX_ARTICLES_PER_CALL = 30

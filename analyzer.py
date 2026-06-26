@@ -181,8 +181,8 @@ def _pre_filter(articles: list[dict]) -> list[dict]:
         return any(k in haystack for k in kw_lower)
 
     filtered = [a for a in articles if _is_relevant(a)]
-    # If fewer than 10 articles pass, just use all of them so Claude gets context
-    return filtered if len(filtered) >= 10 else articles
+    # Fall back to all articles only if very few pass the filter
+    return filtered if len(filtered) >= 5 else articles
 
 
 def _call_claude(articles: list[dict], client: anthropic.Anthropic) -> dict:
