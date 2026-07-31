@@ -4,7 +4,7 @@ import random
 import re
 import smtplib
 import textwrap
-from datetime import date, datetime
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -35,296 +35,75 @@ COMPETITOR_LABELS = {
     "nbcu":    "NBCU",
 }
 
-# ── Stoic quotes ──────────────────────────────────────────────────────────────
+# ── Daily trivia questions ─────────────────────────────────────────────────────
+# 60 questions: 12 each for Geography, History, Science, Sports, Entertainment
 
-STOIC_QUOTES: list[tuple[str, str]] = [
-    # Marcus Aurelius — Meditations
-    ("Waste no more time arguing about what a good man should be. Be one.", "Marcus Aurelius"),
-    ("You have power over your mind, not outside events. Realize this, and you will find strength.", "Marcus Aurelius"),
-    ("The impediment to action advances action. What stands in the way becomes the way.", "Marcus Aurelius"),
-    ("The soul becomes dyed with the color of its thoughts.", "Marcus Aurelius"),
-    ("If it is not right, do not do it; if it is not true, do not say it.", "Marcus Aurelius"),
-    ("You could leave life right now. Let that determine what you do and say and think.", "Marcus Aurelius"),
-    ("Very little is needed to make a happy life; it is all within yourself, in your way of thinking.", "Marcus Aurelius"),
-    ("Accept the things to which fate binds you, and love the people with whom fate brings you together.", "Marcus Aurelius"),
-    ("The best revenge is to be unlike him who performed the injury.", "Marcus Aurelius"),
-    ("It is not death that a man should fear, but he should fear never beginning to live.", "Marcus Aurelius"),
-    ("Loss is nothing else but change, and change is Nature's delight.", "Marcus Aurelius"),
-    ("The first rule is to keep an untroubled spirit. The second is to look things in the face and know them for what they are.", "Marcus Aurelius"),
-    ("Never esteem anything as of advantage to you that will make you break your word or lose your self-respect.", "Marcus Aurelius"),
-    ("Do not act as if you had ten thousand years to live.", "Marcus Aurelius"),
-    ("How much more grievous are the consequences of anger than the causes of it.", "Marcus Aurelius"),
-    ("Confine yourself to the present.", "Marcus Aurelius"),
-    ("Dwell on the beauty of life. Watch the stars, and see yourself running with them.", "Marcus Aurelius"),
-    ("The happiness of your life depends upon the quality of your thoughts.", "Marcus Aurelius"),
-    ("When you wake up in the morning, think of what a precious privilege it is to be alive — to breathe, to think, to enjoy, to love.", "Marcus Aurelius"),
-    ("Everything we hear is an opinion, not a fact. Everything we see is a perspective, not the truth.", "Marcus Aurelius"),
-    # Epictetus — Enchiridion & Discourses
-    ("Make the best use of what is in your power, and take the rest as it happens.", "Epictetus"),
-    ("Men are disturbed not by things, but by the opinions about things.", "Epictetus"),
-    ("Seek not the good in external things; seek it in yourself.", "Epictetus"),
-    ("No man is free who is not master of himself.", "Epictetus"),
-    ("Don't explain your philosophy. Embody it.", "Epictetus"),
-    ("First say to yourself what you would be; then do what you have to do.", "Epictetus"),
-    ("Wealth consists not in having great possessions, but in having few wants.", "Epictetus"),
-    ("If you want to improve, be content to be thought foolish and stupid.", "Epictetus"),
-    ("The more we value things outside our control, the less control we have.", "Epictetus"),
-    ("Seek not that the things which happen should happen as you wish; but wish the things which happen to be as they are, and you will have a tranquil flow of life.", "Epictetus"),
-    ("He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has.", "Epictetus"),
-    ("It's not what happens to you, but how you react to it that matters.", "Epictetus"),
-    ("Freedom is the only worthy goal in life. It is won by disregarding things that lie beyond our control.", "Epictetus"),
-    ("Circumstances don't make the man, they only reveal him to himself.", "Epictetus"),
-    ("We have two ears and one mouth so that we can listen twice as much as we speak.", "Epictetus"),
-    # Seneca — Letters to Lucilius & Essays
-    ("We suffer more in imagination than in reality.", "Seneca"),
-    ("Begin at once to live, and count each separate day as a separate life.", "Seneca"),
-    ("The whole future lies in uncertainty: live immediately.", "Seneca"),
-    ("As long as you live, keep learning how to live.", "Seneca"),
-    ("It is not the man who has too little, but the man who craves more, that is poor.", "Seneca"),
-    ("While we wait for life, life passes.", "Seneca"),
-    ("Omnia, Lucili, aliena sunt, tempus tantum nostrum est. — Everything is alien to us; time alone is ours.", "Seneca"),
-    ("To be everywhere is to be nowhere.", "Seneca"),
-    ("If you really want to escape the things that harass you, what you need is not to be in a different place but to be a different person.", "Seneca"),
-    ("Associate with those who will make a better man of you. Welcome those whom you yourself can improve.", "Seneca"),
-    ("The mind that is anxious about future events is miserable.", "Seneca"),
-    ("He suffers more than necessary, who suffers before it is necessary.", "Seneca"),
-    ("There is nothing the wise man does reluctantly. He escapes necessity because he wills what necessity will force upon him.", "Seneca"),
-    ("Yield not to adversity; trust not to prosperity; keep before your eyes the full scope of Fortune's power.", "Seneca"),
-    ("No wind favors him who has no destined port.", "Seneca"),
-    ("He who is brave is free.", "Seneca"),
-    # Zeno of Citium
-    ("Man conquers the world by conquering himself.", "Zeno of Citium"),
-    ("Better to stumble with the toe than with the tongue.", "Zeno of Citium"),
-    ("Happiness is a good flow of life.", "Zeno of Citium"),
-    ("All things are parts of one single system, which is called Nature.", "Zeno of Citium"),
-    ("The goal of life is living in agreement with Nature.", "Zeno of Citium"),
-    # Cato the Younger
-    ("I begin to speak only when I'm certain what I'll say isn't better left unsaid.", "Cato the Younger"),
-    ("Grasp the subject; the words will follow.", "Cato the Younger"),
-    ("An angry man opens his mouth and shuts his eyes.", "Cato the Younger"),
-    # Cleanthes
-    ("Lead me, O Zeus, and lead me, Destiny, to that goal long ago assigned to me. I'll follow and not falter; if my will prove weak and craven, still I'll follow on.", "Cleanthes"),
-    ("Seek not good from without; seek it from within yourselves, or you will never find it.", "Cleanthes"),
-]
-
-# ── Knicks fun facts — displayed May 27 through June 15, 2026 ─────────────────
-# Index 0 = May 27, index 19 = June 15
-
-KNICKS_FACTS: list[tuple[str, str]] = [
-    # 0 — May 27
-    (
-        "On May 12, 1985, the NBA held its first-ever Draft Lottery — designed so all "
-        "non-playoff teams had a shot at the top pick. The New York Knicks, fresh off a "
-        "24-58 season, won. They used the selection on Georgetown center Patrick Ewing "
-        "on June 18, 1985, and within three seasons turned into a perennial Eastern Conference "
-        "force. Meanwhile, the Boston Celtics had won 63 games that year — and would spend "
-        "the next decade watching Ewing torment them every spring.",
-        "1985 NBA Draft Lottery",
-    ),
-    # 1 — May 28
-    (
-        "Patrick Ewing played 15 seasons as a Knick (1985–2000) and retired as the "
-        "franchise's all-time leader in points (18,860), rebounds, blocked shots, and "
-        "games played. He earned 11 All-Star selections in a Knicks uniform, was named "
-        "to the NBA's 50 Greatest Players list in 1996, and guided New York to the "
-        "playoffs in 13 of his 15 seasons. His No. 33 was retired in 2003 — the most "
-        "decorated number in franchise history.",
-        "Patrick Ewing Era, 1985–2000",
-    ),
-    # 2 — May 29
-    (
-        "Pat Riley's 1993–94 Knicks went 57-25 — the best record in the Eastern Conference "
-        "— in a season defined by suffocating defense and collective will. With Michael Jordan "
-        "retired, they bulldozed through New Jersey, outlasted the Chicago Bulls in seven games, "
-        "and edged Indiana in seven more before losing to Hakeem Olajuwon's Houston Rockets "
-        "in a seven-game Finals. The Knicks held opponents to fewer than 96 points per game, "
-        "second-best in the league. It remains the franchise's last Finals appearance.",
-        "1993–94 Knicks Season",
-    ),
-    # 3 — May 30
-    (
-        "Game 7 of the 1994 NBA Finals came down to 48 minutes in Houston. What stood "
-        "between the Knicks and their second-ever championship: shooting guard John Starks "
-        "went 2-for-18 from the field, 0-for-8 from three-point range, in the deciding game. "
-        "Patrick Ewing scored 17 with 8 rebounds. The Knicks lost 90-84. Starks was so haunted "
-        "by the performance that he produced a documentary about it 16 years later. Hakeem "
-        "Olajuwon averaged 26.9 points and 9.1 rebounds for the series.",
-        "1994 NBA Finals, Game 7",
-    ),
-    # 4 — May 31
-    (
-        "On May 16, 1999, with the Knicks trailing Miami 77-76 in Game 5 of the first "
-        "round, Allan Houston drove the baseline with 4.5 seconds left. His running layup "
-        "bounced off the front of the rim, rolled around slowly, and fell through with "
-        "0.8 seconds remaining. Knicks 78, Heat 77. The shot — one of the most replayed "
-        "in franchise history — eliminated the No. 1-seeded Heat and launched the "
-        "Knicks on a run to the NBA Finals.",
-        "May 16, 1999 — Allan Houston's Shot",
-    ),
-    # 5 — June 1
-    (
-        "The 1999 Knicks are still the only No. 8 seed in NBA history to reach the Finals. "
-        "Playing in a lockout-shortened 50-game season, they finished 27-23, then eliminated "
-        "the top-seeded Miami Heat, the Atlanta Hawks, and the No. 1 overall seed Indiana "
-        "Pacers — going 11-4 in the postseason before losing to San Antonio 4-1 in the Finals. "
-        "That same year, the Boston Celtics went 19-31 and didn't sniff the playoffs. "
-        "Different franchises; different springs.",
-        "1999 NBA Playoffs",
-    ),
-    # 6 — June 2
-    (
-        "In December 1997, Latrell Sprewell was suspended for the entire 1997–98 season — "
-        "effectively exiled from the NBA — after choking Golden State Warriors coach P.J. "
-        "Carlesimo during practice. The Knicks acquired him in a January 1999 trade. Six "
-        "months later he was starting in the NBA Finals, scoring 20 points in Game 4 against "
-        "San Antonio, and became one of the most beloved players in MSG history. His "
-        "redemption arc — from league pariah to playoff hero in under two years — remains "
-        "one of the most improbable in the sport.",
-        "Latrell Sprewell, 1999",
-    ),
-    # 7 — June 3
-    (
-        "On July 1, 2010 — the first moment NBA free agency opened — the Knicks signed "
-        "Amar'e Stoudemire to a five-year, $100 million contract, the largest commitment "
-        "the franchise had made in years. In his debut season, Stoudemire averaged 25.3 "
-        "points and 8.2 rebounds per game, earned an All-Star selection, and gave Knicks fans "
-        "their most compelling offensive centerpiece since Patrick Ewing. His arrival set the "
-        "stage for the Carmelo Anthony trade seven months later, signaling New York was "
-        "serious about rebuilding.",
-        "Summer 2010, Knicks Free Agency",
-    ),
-    # 8 — June 4
-    (
-        "On February 22, 2011, the Knicks acquired Carmelo Anthony and Chauncey Billups "
-        "from Denver, sending Wilson Chandler, Raymond Felton, Danilo Gallinari, Timofey "
-        "Mozgov, and draft compensation in return. Carmelo scored 27 points in his debut "
-        "four days later. The cost was real — Gallinari became a quality starter for a "
-        "decade — but the Knicks got exactly what they wanted: a top-5 scorer in his "
-        "prime at Madison Square Garden. Over six-plus seasons, Carmelo posted 10,186 "
-        "points in blue-and-orange — second only to Ewing.",
-        "February 2011, The Carmelo Trade",
-    ),
-    # 9 — June 5
-    (
-        "On January 24, 2014, Carmelo Anthony scored 62 points against the Charlotte "
-        "Bobcats at Madison Square Garden — a franchise record that still stands. He reached "
-        "the mark in three quarters going 23-for-35, then sat out the fourth with the Knicks "
-        "leading by 30. The previous Knicks single-game record was 60, set by Bernard King "
-        "on Christmas Day 1984 — the season before Patrick Ewing arrived. Carmelo erased it "
-        "by two points, in three quarters, against a team that would finish 7-59.",
-        "January 24, 2014 — Carmelo's 62",
-    ),
-    # 10 — June 6
-    (
-        "In early February 2012, Jeremy Lin was an undrafted 23-year-old who had been "
-        "waived by Golden State and Houston and was sleeping on his brother's couch in "
-        "Manhattan. With Carmelo Anthony and Amar'e Stoudemire both sidelined by injuries, "
-        "the Knicks had little choice but to start him. On February 4, Lin scored 25 "
-        "points with 7 assists against the New Jersey Nets. Linsanity — one of the most "
-        "electric individual runs in NBA history — had begun.",
-        "February 4, 2012 — Linsanity Begins",
-    ),
-    # 11 — June 7
-    (
-        "Over his first seven starts in February 2012, Jeremy Lin averaged 24.4 points "
-        "and 9.1 assists per game — numbers that ranked among the best point guard "
-        "stretches in the league that month. On February 10, he scored 38 against Kobe "
-        "Bryant's Los Angeles Lakers. MSG sold out every game during the streak. In two "
-        "weeks, Lin appeared on two Sports Illustrated covers and was the most-searched "
-        "person on Google globally. The Knicks went 9-3 in his starts before he tore "
-        "his meniscus in March, ending the dream.",
-        "February–March 2012, Linsanity",
-    ),
-    # 12 — June 8
-    (
-        "Madison Square Garden — 'The World's Most Famous Arena' — has hosted Knicks "
-        "basketball since 1968 and operates at a capacity of 19,812 for NBA games. In "
-        "the years before the COVID-19 pandemic disrupted the 2019–20 season, the Knicks "
-        "maintained one of the longest active home sellout streaks in the NBA, selling "
-        "out games even through their darkest rebuilding winters. Premium floor seats at "
-        "MSG have commanded the highest prices in the league for most of the past decade "
-        "— a testament to a fan base that refuses to look away.",
-        "Madison Square Garden",
-    ),
-    # 13 — June 9
-    (
-        "In the first round of the 2013 playoffs, Carmelo Anthony averaged 28.3 points "
-        "as the Knicks eliminated the Boston Celtics in six games. It turned out to be "
-        "the final playoff series of Boston's Kevin Garnett–Paul Pierce–Ray Allen era. "
-        "Within weeks, the Celtics traded Pierce and Garnett to Brooklyn for a package "
-        "of picks — a deal that aged catastrophically for the Nets (no title, no picks) "
-        "while Boston used those assets to draft Jaylen Brown and build the 2024 NBA "
-        "champion Celtics. The Knicks didn't just beat Boston — they accidentally "
-        "triggered their rival's dynasty.",
-        "2013 First Round — Knicks def. Celtics 4-2",
-    ),
-    # 14 — June 10
-    (
-        "After eight consecutive missed playoffs — the longest drought in franchise history "
-        "since the 1970s — the Knicks returned to the postseason in 2021 under first-year "
-        "head coach Tom Thibodeau, finishing 41-31. Julius Randle, previously written off "
-        "by New Orleans and the Lakers, won the NBA's Most Improved Player award after "
-        "averaging 24.1 points, 10.2 rebounds, and 6.0 assists — a stunning leap that "
-        "made him an All-Star. RJ Barrett averaged 17.6 points at age 20. MSG buzzed "
-        "with playoff energy for the first time in eight years.",
-        "2020–21 Knicks Season",
-    ),
-    # 15 — June 11
-    (
-        "In July 2022, Jalen Brunson agreed to a four-year, $104 million deal with the "
-        "Knicks — widely viewed as well below market value at a time when comparable "
-        "guards were signing for $150+ million. The connection was partly personal: "
-        "Brunson's father Rick had been part of the Knicks organization for years. "
-        "In his first season, Brunson averaged 24.0 points and 6.2 assists, immediately "
-        "making New York one of the East's most cohesive offensive teams. He proved to be "
-        "the best value contract in the NBA that offseason.",
-        "July 2022 — Jalen Brunson Signs",
-    ),
-    # 16 — June 12
-    (
-        "The 2023–24 Knicks went 50-32 — their first 50-win season since 1996–97 and the "
-        "second-best record in the Eastern Conference. Jalen Brunson averaged 28.7 points "
-        "and 6.7 assists, earning All-NBA Second Team honors — the most by a Knick since "
-        "Carmelo Anthony's prime. In the first round, Brunson scored 41 in the series-"
-        "clinching win over Philadelphia. The Garden sold out every home game for the "
-        "second straight season, and the expectation level in New York shifted from "
-        "'make the playoffs' to 'make a run.'",
-        "2023–24 Knicks Season",
-    ),
-    # 17 — June 13
-    (
-        "In January 2024, the Knicks traded RJ Barrett and Immanuel Quickley to Toronto "
-        "for OG Anunoby, one of the NBA's premier two-way wings. Eight months later, they "
-        "acquired Karl-Anthony Towns from Minnesota — a seven-time All-Star — for Julius "
-        "Randle and Donte DiVincenzo, then added Mikal Bridges from Brooklyn. In the span "
-        "of 12 months, the Knicks assembled arguably the most talented roster the franchise "
-        "had built since the Ewing years, with Brunson, Bridges, Anunoby, and Towns "
-        "forming the core.",
-        "2024 Roster Construction",
-    ),
-    # 18 — June 14
-    (
-        "The Knicks' most consequential draft moment: May 12, 1985 — winning the first-"
-        "ever NBA lottery to select Patrick Ewing. Their most painful: June 26, 2003, "
-        "holding the 8th pick and selecting power forward Mike Sweetney. At No. 1 that "
-        "night: LeBron James. No. 3: Carmelo Anthony. No. 4: Chris Bosh. No. 5: Dwyane "
-        "Wade. The Knicks eventually got Carmelo — in February 2011 — but it cost them "
-        "Gallinari, Felton, Mozgov, and multiple first-round picks. Sometimes the draft "
-        "lottery is cheaper.",
-        "Knicks Draft History",
-    ),
-    # 19 — June 15
-    (
-        "For most of the past 25 years, being a Knicks fan meant watching other teams "
-        "win while MSG hosted mediocre basketball at premium prices. What changed: patient "
-        "reconstruction starting in 2019, Tom Thibodeau's culture overhaul, the under-"
-        "market signing of Jalen Brunson, and a run of aggressive trades in 2024 that "
-        "brought in OG Anunoby, Karl-Anthony Towns, and Mikal Bridges. For the first "
-        "time since the Ewing era, a Knicks championship run felt genuinely plausible — "
-        "and Boston's 2024 title, built on picks extracted from Brooklyn's failed dynasty "
-        "attempt, began the day Carmelo's Knicks eliminated the Celtics in 2013.",
-        "The Knicks' Window, 2024–Present",
-    ),
+TRIVIA_QUESTIONS: list[dict] = [
+    # ── Geography ──
+    {"topic": "Geography", "question": "What is the capital city of Australia?", "answer": "Canberra"},
+    {"topic": "Geography", "question": "Which river is the longest in Africa?", "answer": "The Nile"},
+    {"topic": "Geography", "question": "What country contains the most natural lakes in the world?", "answer": "Canada"},
+    {"topic": "Geography", "question": "In which South American country is the Atacama Desert located?", "answer": "Chile"},
+    {"topic": "Geography", "question": "What is the smallest country in the world by land area?", "answer": "Vatican City"},
+    {"topic": "Geography", "question": "Which two countries share the longest international land border?", "answer": "Canada and the United States"},
+    {"topic": "Geography", "question": "What is the deepest lake in the world?", "answer": "Lake Baikal (Russia)"},
+    {"topic": "Geography", "question": "Which country actually has more ancient pyramids than Egypt?", "answer": "Sudan"},
+    {"topic": "Geography", "question": "The Strait of Malacca separates the Malay Peninsula from which large island?", "answer": "Sumatra"},
+    {"topic": "Geography", "question": "Which mountain range is traditionally considered the boundary between Europe and Asia?", "answer": "The Ural Mountains"},
+    {"topic": "Geography", "question": "What is the only sea with no coastline, surrounded entirely by ocean water?", "answer": "The Sargasso Sea"},
+    {"topic": "Geography", "question": "Which African country has the largest land area?", "answer": "Algeria"},
+    # ── History ──
+    {"topic": "History", "question": "In what year did the Berlin Wall fall?", "answer": "1989"},
+    {"topic": "History", "question": "Who was the first woman to win a Nobel Prize?", "answer": "Marie Curie (1903, Physics)"},
+    {"topic": "History", "question": "What was the name of the empire ruled by Genghis Khan?", "answer": "The Mongol Empire"},
+    {"topic": "History", "question": "In what year did World War I begin?", "answer": "1914"},
+    {"topic": "History", "question": "Which country was the first in the world to grant women the right to vote nationally?", "answer": "New Zealand (1893)"},
+    {"topic": "History", "question": "The Battle of Waterloo in 1815 ended the rule of which European leader?", "answer": "Napoleon Bonaparte"},
+    {"topic": "History", "question": "In what year did the Soviet Union officially dissolve?", "answer": "1991"},
+    {"topic": "History", "question": "Who was the first President of the United States?", "answer": "George Washington"},
+    {"topic": "History", "question": "The Magna Carta, limiting royal power in England, was signed in what year?", "answer": "1215"},
+    {"topic": "History", "question": "Which ancient wonder of the world stood at the entrance to the harbor of Rhodes?", "answer": "The Colossus of Rhodes"},
+    {"topic": "History", "question": "What was the name of the ship that sank after striking an iceberg on April 14, 1912?", "answer": "RMS Titanic"},
+    {"topic": "History", "question": "The Silk Road connected ancient China to which western endpoint, now in modern-day Turkey?", "answer": "Constantinople (Istanbul)"},
+    # ── Science ──
+    {"topic": "Science", "question": "What is the chemical symbol for gold on the periodic table?", "answer": "Au"},
+    {"topic": "Science", "question": "How many bones are in the adult human body?", "answer": "206"},
+    {"topic": "Science", "question": "What element has atomic number 1?", "answer": "Hydrogen"},
+    {"topic": "Science", "question": "What is the term for the organelle known as 'the powerhouse of the cell'?", "answer": "Mitochondria"},
+    {"topic": "Science", "question": "How many chromosomes do humans normally have?", "answer": "46"},
+    {"topic": "Science", "question": "What gas do plants absorb from the atmosphere during photosynthesis?", "answer": "Carbon dioxide (CO₂)"},
+    {"topic": "Science", "question": "What is the hardest natural substance on Earth?", "answer": "Diamond"},
+    {"topic": "Science", "question": "In which organ of the body is insulin produced?", "answer": "The pancreas"},
+    {"topic": "Science", "question": "What is the most abundant gas in Earth's atmosphere?", "answer": "Nitrogen (about 78%)"},
+    {"topic": "Science", "question": "What is the name of the force that keeps planets in orbit around the sun?", "answer": "Gravity"},
+    {"topic": "Science", "question": "What is the speed of light in a vacuum, to the nearest whole number in millions of meters per second?", "answer": "300 million meters per second (299,792,458 m/s)"},
+    {"topic": "Science", "question": "What is the term for a scientist who studies earthquakes?", "answer": "Seismologist"},
+    # ── Sports ──
+    {"topic": "Sports", "question": "How many rings appear on the Olympic flag?", "answer": "Five"},
+    {"topic": "Sports", "question": "In tennis, what is the term for a score of 40–40?", "answer": "Deuce"},
+    {"topic": "Sports", "question": "Which country has won the most FIFA World Cup titles?", "answer": "Brazil (5 titles)"},
+    {"topic": "Sports", "question": "How many players from each team are on the court at one time in basketball?", "answer": "Five"},
+    {"topic": "Sports", "question": "In golf, what is the term for completing a hole one stroke under par?", "answer": "Birdie"},
+    {"topic": "Sports", "question": "How long is each end zone in American football, in yards?", "answer": "10 yards"},
+    {"topic": "Sports", "question": "In which sport would you perform a butterfly stroke?", "answer": "Swimming"},
+    {"topic": "Sports", "question": "What is the maximum score achievable in a single game of ten-pin bowling?", "answer": "300"},
+    {"topic": "Sports", "question": "How many balls does a batter need to receive for a walk in baseball?", "answer": "Four"},
+    {"topic": "Sports", "question": "The Stanley Cup is the championship trophy for which professional sport?", "answer": "Ice hockey (NHL)"},
+    {"topic": "Sports", "question": "In what country did the sport of rugby originate?", "answer": "England"},
+    {"topic": "Sports", "question": "What is the diameter of a regulation basketball hoop in inches?", "answer": "18 inches"},
+    # ── Entertainment ──
+    {"topic": "Entertainment", "question": "Who directed the 1975 blockbuster film Jaws?", "answer": "Steven Spielberg"},
+    {"topic": "Entertainment", "question": "Which Shakespeare play features the characters Rosencrantz and Guildenstern?", "answer": "Hamlet"},
+    {"topic": "Entertainment", "question": "Which artist painted the ceiling of the Sistine Chapel?", "answer": "Michelangelo"},
+    {"topic": "Entertainment", "question": "What fictional paper company is at the center of the TV show The Office?", "answer": "Dunder Mifflin"},
+    {"topic": "Entertainment", "question": "What band was Freddie Mercury the lead singer of?", "answer": "Queen"},
+    {"topic": "Entertainment", "question": "Who wrote the Harry Potter book series?", "answer": "J.K. Rowling"},
+    {"topic": "Entertainment", "question": "In which US city is the TV show Seinfeld set?", "answer": "New York City"},
+    {"topic": "Entertainment", "question": "What musician is known as 'The King of Pop'?", "answer": "Michael Jackson"},
+    {"topic": "Entertainment", "question": "The TV show Breaking Bad is set primarily in which US city?", "answer": "Albuquerque, New Mexico"},
+    {"topic": "Entertainment", "question": "What 1994 film starring Tom Hanks follows a slow-witted man who witnesses major historical events?", "answer": "Forrest Gump"},
+    {"topic": "Entertainment", "question": "Which novel by F. Scott Fitzgerald is set in the fictional Long Island towns of East Egg and West Egg?", "answer": "The Great Gatsby"},
+    {"topic": "Entertainment", "question": "What is the name of the fictional African kingdom in the 2018 Marvel film Black Panther?", "answer": "Wakanda"},
 ]
 
 # ── Shared style values ────────────────────────────────────────────────────────
@@ -624,24 +403,22 @@ def _finance_corner_section(items: list[dict]) -> str:
 
 def build_html(briefing: dict, article_count: int, run_date: str, sources: list[str]) -> str:
     _today = datetime.now().date()
-    _knicks_start = date(2026, 5, 27)
-    _knicks_end   = date(2026, 6, 15)
-    if _knicks_start <= _today <= _knicks_end:
-        _fact_text, _fact_attr = KNICKS_FACTS[(_today - _knicks_start).days]
-        quote_inner = (
-            f'<p style="font-style:italic;color:#e2e8f0;font-size:13px;line-height:1.65;'
-            f'margin:0;font-weight:400;font-family:{_FONT}">{_fact_text}</p>'
-            f'<div style="color:#f07030;font-size:11px;margin-top:7px;font-weight:400;'
-            f'font-family:{_FONT}">&#8212; {_fact_attr}</div>'
-        )
-    else:
-        stoic_text, stoic_author = random.choice(STOIC_QUOTES)
-        quote_inner = (
-            f'<p style="font-style:italic;color:#e2e8f0;font-size:13px;line-height:1.65;'
-            f'margin:0;font-weight:400;font-family:{_FONT}">&#8220;{stoic_text}&#8221;</p>'
-            f'<div style="color:#f07030;font-size:11px;margin-top:7px;font-weight:400;'
-            f'font-family:{_FONT}">&#8212; {stoic_author}</div>'
-        )
+    _rng = random.Random(_today.toordinal())
+    trivia = _rng.choice(TRIVIA_QUESTIONS)
+    trivia_inner = (
+        f'<div style="color:#f07030;font-size:10px;font-weight:700;text-transform:uppercase;'
+        f'letter-spacing:.6px;margin-bottom:7px;font-family:{_FONT}">{trivia["topic"]}</div>'
+        f'<p style="font-style:italic;color:#e2e8f0;font-size:13px;line-height:1.65;'
+        f'margin:0;font-weight:400;font-family:{_FONT}">{trivia["question"]}</p>'
+    )
+    trivia_answer_block = (
+        f'<div style="background:#f7f7f7;border-top:1px solid #e2e8f0;'
+        f'padding:10px 32px 12px;margin-top:8px">'
+        f'<span style="color:#f07030;font-size:11px;font-weight:700;'
+        f'text-transform:uppercase;letter-spacing:.4px;font-family:{_FONT}">Trivia Answer: </span>'
+        f'<span style="color:#6b7280;font-size:13px;font-family:{_FONT}">{trivia["answer"]}</span>'
+        f'</div>'
+    )
     exec_summary = briefing.get("executive_summary", "No summary available.")
     key_themes   = briefing.get("key_themes", [])
     top_stories  = briefing.get("top_stories", [])
@@ -711,9 +488,9 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
     <div style="color:#6b7280;font-size:12px;margin-top:4px;font-family:{_FONT}">{run_date} &bull; {article_count} articles analyzed</div>
   </div>
 
-  <!-- Daily quote / Knicks fact -->
+  <!-- Daily trivia question -->
   <div style="background:#1a1a2e;padding:16px 32px 14px">
-    {quote_inner}
+    {trivia_inner}
   </div>
 
   <!-- Executive summary -->
@@ -743,6 +520,9 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
 
   <!-- Policy notes -->
   {policy_block}
+
+  <!-- Trivia answer -->
+  {trivia_answer_block}
 
   <!-- Footer -->
   <div style="background:#edf2f7;padding:10px 32px;font-size:11px;color:#8895a7;text-align:center;margin-top:8px;font-family:{_FONT}">
