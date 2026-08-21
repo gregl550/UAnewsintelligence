@@ -5,7 +5,6 @@ import re
 import time
 
 import anthropic
-import httpx
 
 from config import CLAUDE_MODEL, MAX_ARTICLES_PER_CALL, RELEVANCE_KEYWORDS
 
@@ -211,6 +210,7 @@ def _call_claude(articles: list[dict], client: anthropic.Anthropic, prev_headlin
     response = client.messages.create(
         model=CLAUDE_MODEL,
         max_tokens=8192,
+        timeout=180.0,
         system=[
             {
                 "type": "text",
@@ -238,9 +238,6 @@ def _call_claude(articles: list[dict], client: anthropic.Anthropic, prev_headlin
 def analyze_articles(articles: list[dict], seen_urls: set[str] | None = None, prev_headlines: list[str] | None = None) -> dict:
     client = anthropic.Anthropic(
         api_key=os.environ["ANTHROPIC_API_KEY"],
-        http_client=httpx.Client(
-            timeout=httpx.Timeout(connect=30.0, read=180.0, write=30.0, pool=30.0)
-        ),
     )
 
     # Pre-filter for relevance, deduplicate against yesterday, then cap at max batch size
