@@ -394,7 +394,7 @@ def _finance_corner_section(items: list[dict]) -> str:
         f'<div style="background:#f1f8e9;margin-top:8px">'
         f'<div style="padding:9px 32px;border-bottom:1px solid #c8e6c9;background:#1b5e20">'
         f'<h2 style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.6px;'
-        f'color:#fff;font-weight:700;font-family:{_FONT}">Melissa&#8217;s Finance Corner &#128200;</h2>'
+        f'color:#fff;font-weight:700;font-family:{_FONT}">Gino&#8217;s Finance Corner &#128200;</h2>'
         f'</div>'
         f'{body}'
         f'</div>'
