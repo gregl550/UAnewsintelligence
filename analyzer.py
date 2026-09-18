@@ -196,12 +196,19 @@ def _pre_filter(articles: list[dict], seen_urls: set[str] | None = None) -> list
     return candidates
 
 
-def _call_claude(articles: list[dict], client: anthropic.Anthropic, prev_headlines: list[str] | None = None) -> dict:
+def _call_claude(articles: list[dict], client: anthropic.Anthropic, prev_headlines: list[str] | None = None, prev_exec_summary: str | None = None) -> dict:
     articles_text = _format_articles(articles)
     prev_context = ""
     if prev_headlines:
         headlines_list = "\n".join(f"- {h}" for h in prev_headlines)
         prev_context = f"\n\nYESTERDAY'S TOP STORIES (do not repeat these angles):\n{headlines_list}\n"
+    if prev_exec_summary:
+        prev_context += (
+            f"\n\nThe following was yesterday's executive summary — do not repeat any of the same "
+            f"themes, stories, or framing in today's summary, even if the same stories appear in "
+            f"today's feeds. Write today's summary from a fresh angle:\n"
+            f"Yesterday's summary was: {prev_exec_summary}\n"
+        )
     user_msg = (
         f"Analyze these {len(articles)} articles published in the past 24 hours "
         f"and return your JSON briefing:{prev_context}\n\n{articles_text}"
@@ -235,7 +242,7 @@ def _call_claude(articles: list[dict], client: anthropic.Anthropic, prev_headlin
     return json.loads(raw)
 
 
-def analyze_articles(articles: list[dict], seen_urls: set[str] | None = None, prev_headlines: list[str] | None = None) -> dict:
+def analyze_articles(articles: list[dict], seen_urls: set[str] | None = None, prev_headlines: list[str] | None = None, prev_exec_summary: str | None = None) -> dict:
     client = anthropic.Anthropic(
         api_key=os.environ["ANTHROPIC_API_KEY"],
     )
@@ -250,7 +257,7 @@ def analyze_articles(articles: list[dict], seen_urls: set[str] | None = None, pr
 
     for attempt in range(3):
         try:
-            return _call_claude(filtered, client, prev_headlines=prev_headlines)
+            return _call_claude(filtered, client, prev_headlines=prev_headlines, prev_exec_summary=prev_exec_summary)
         except json.JSONDecodeError as exc:
             logger.error(f"  JSON parse failed (attempt {attempt + 1}): {exc}")
             if attempt == 2:

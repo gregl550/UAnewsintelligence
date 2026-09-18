@@ -35,13 +35,13 @@ def _check_env() -> None:
         sys.exit(1)
 
 
-def _load_previous_briefing() -> tuple[set[str], list[str]]:
+def _load_previous_briefing() -> tuple[set[str], list[str], str]:
     archive_dir = Path(__file__).parent / "logs" / "archive"
     yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     fname = archive_dir / f"briefing_{yesterday}.json"
     if not fname.exists():
         logger.info("  No previous briefing found — proceeding without deduplication")
-        return set(), []
+        return set(), [], ""
     try:
         with open(fname) as f:
             data = json.load(f)
@@ -61,11 +61,12 @@ def _load_previous_briefing() -> tuple[set[str], list[str]]:
                 if item.get("url"):
                     seen_urls.add(item["url"])
         prev_headlines = [s["title"] for s in briefing.get("top_stories", []) if s.get("title")]
+        prev_exec_summary = briefing.get("executive_summary", "")
         logger.info(f"  Loaded previous briefing: {len(seen_urls)} seen URLs, {len(prev_headlines)} top headlines")
-        return seen_urls, prev_headlines
+        return seen_urls, prev_headlines, prev_exec_summary
     except Exception as exc:
         logger.warning(f"  Could not load previous briefing: {exc}")
-        return set(), []
+        return set(), [], ""
 
 
 def _save_backup(briefing: dict, article_count: int) -> None:
@@ -100,9 +101,9 @@ def main() -> None:
     logger.info("STEP 2 — Analyzing with Claude")
     from analyzer import analyze_articles
     import anthropic as _anthropic
-    seen_urls, prev_headlines = _load_previous_briefing()
+    seen_urls, prev_headlines, prev_exec_summary = _load_previous_briefing()
     try:
-        briefing = analyze_articles(articles, seen_urls=seen_urls, prev_headlines=prev_headlines)
+        briefing = analyze_articles(articles, seen_urls=seen_urls, prev_headlines=prev_headlines, prev_exec_summary=prev_exec_summary)
     except _anthropic.APITimeoutError:
         logger.error("Claude API timed out on all 3 attempts (120s each). Exiting without sending email.")
         sys.exit(1)
