@@ -34,359 +34,271 @@ COMPETITOR_LABELS = {
     "nbcu":    "NBCU",
 }
 
-# ── Word of the Day ────────────────────────────────────────────────────────────
-# 261 words — exactly one per weekday for a full year, no repeats.
-# Interleaved adjective / noun / verb so the part of speech rotates daily.
+# ── Did You Know? ─────────────────────────────────────────────────────────────
+# 261 NBC/TV history facts — one per weekday for a full year, no repeats.
 
-WORDS_OF_THE_DAY: list[dict] = [
-    # index 0-2
-    {"word": "ephemeral",     "pos": "adjective", "definition": "Lasting for a very short time; transitory.", "example": "CTV ad impressions are ephemeral by nature — a viewer sees the spot once and moves on."},
-    {"word": "exigency",      "pos": "noun",      "definition": "An urgent need or demand requiring immediate action.", "example": "The exigency of the Q4 deadline forced every campaign manager to finalise budgets overnight."},
-    {"word": "ruminate",      "pos": "verb",      "definition": "To think deeply and at length about something; to ponder.", "example": "She spent the afternoon ruminating on whether to shift the remaining budget from linear to CTV."},
-    # index 3-5
-    {"word": "laconic",       "pos": "adjective", "definition": "Using very few words; brief and concise in speech or expression.", "example": "Her laconic reply — a single nod — told the agency everything it needed to know about the creative direction."},
-    {"word": "impetus",       "pos": "noun",      "definition": "A force or energy that makes something happen or happen faster.", "example": "The surge in streaming subscriptions gave brands the impetus they needed to shift budget from linear TV."},
-    {"word": "galvanize",     "pos": "verb",      "definition": "To shock or excite someone into taking action; to stimulate into activity.", "example": "The announcement of Prime Video's ad-supported tier galvanised the industry to reassess CTV CPMs."},
-    # index 6-8
-    {"word": "pellucid",      "pos": "adjective", "definition": "Translucently clear; easily understood.", "example": "The best creative briefs are pellucid — every team member should be able to explain the campaign in one sentence."},
-    {"word": "equanimity",    "pos": "noun",      "definition": "Mental calmness and composure, especially in difficult situations.", "example": "The media buyer faced the last-minute targeting changes with remarkable equanimity."},
-    {"word": "coalesce",      "pos": "verb",      "definition": "To come together and form one mass or whole; to unite.", "example": "After months of fragmented signals, the cross-channel attribution data began to coalesce into a coherent picture."},
-    # index 9-11
-    {"word": "sanguine",      "pos": "adjective", "definition": "Optimistic or positive, especially in a difficult situation.", "example": "Despite rising CPMs, the programmatic team remained sanguine about the year's CTV performance."},
-    {"word": "acumen",        "pos": "noun",      "definition": "The ability to make good judgments and quick decisions; shrewdness.", "example": "Her media buying acumen allowed her to identify underpriced streaming inventory before anyone else on the plan."},
-    {"word": "exacerbate",    "pos": "verb",      "definition": "To make a problem, bad situation, or negative feeling worse.", "example": "Signal loss from cookie deprecation only exacerbated the measurement challenges already facing CTV advertisers."},
-    # index 12-14
-    {"word": "mellifluous",   "pos": "adjective", "definition": "Pleasingly smooth and musical in tone or sound.", "example": "Her mellifluous voice made even the most technical campaign debrief sound engaging to the room."},
-    {"word": "gravitas",      "pos": "noun",      "definition": "Dignity, seriousness, and solemnity in manner or bearing.", "example": "The upfront presentation carried a gravitas that underlined how much revenue was at stake for both sides."},
-    {"word": "prevaricate",   "pos": "verb",      "definition": "To speak or act evasively; to avoid stating the truth directly.", "example": "The platform representative prevaricated so long on the measurement question that the client lost confidence entirely."},
-    # index 15-17
-    {"word": "liminal",       "pos": "adjective", "definition": "Relating to a transitional or threshold state between two conditions.", "example": "The industry sits in a liminal state — caught between the old upfront model and the programmatic future."},
-    {"word": "probity",       "pos": "noun",      "definition": "The quality of having strong moral principles; complete honesty and integrity.", "example": "His reputation for probity in reporting made him the obvious choice to lead the campaign measurement committee."},
-    {"word": "mitigate",      "pos": "verb",      "definition": "To make something less severe, serious, or painful; to lessen the impact of.", "example": "Contextual targeting can help mitigate the impact of signal loss on CTV campaign performance."},
-    # index 18-20
-    {"word": "perspicacious", "pos": "adjective", "definition": "Having a ready insight into things; shrewd and perceptive.", "example": "The perspicacious media planner spotted the streaming platform's CPM arbitrage opportunity before any rival agency."},
-    {"word": "verve",         "pos": "noun",      "definition": "Enthusiasm, energy, and vigor, especially in creative or artistic work.", "example": "She tackled the CTV pitch with a verve that won over the client before the deck was halfway through."},
-    {"word": "evince",        "pos": "verb",      "definition": "To reveal the presence of a quality, feeling, or characteristic.", "example": "Her meticulous pre-campaign analysis evinced a level of preparation that immediately impressed the platform team."},
-    # index 21-23
-    {"word": "inimitable",    "pos": "adjective", "definition": "So good or unusual as to be impossible to copy; unique.", "example": "Peacock's inimitable combination of live sports and AVOD inventory made it a standout in the upfront."},
-    {"word": "serendipity",   "pos": "noun",      "definition": "The occurrence of happy or beneficial events by chance; a pleasant surprise.", "example": "It was pure serendipity that the streaming platform launched its self-serve tool just as the brand's linear TV commitment expired."},
-    {"word": "circumvent",    "pos": "verb",      "definition": "To find a clever way around an obstacle or rule; to bypass.", "example": "The advertiser found a smart way to circumvent cookie-based limitations by leaning into first-party CTV data."},
-    # index 24-26
-    {"word": "salient",       "pos": "adjective", "definition": "Most noticeable, important, or relevant; standing out prominently.", "example": "The most salient finding in the attribution report was that CTV was driving 40% of first-touch conversions."},
-    {"word": "propensity",    "pos": "noun",      "definition": "A natural inclination or tendency to behave in a particular way.", "example": "Streaming viewers showed a higher propensity to search for products featured in connected TV ads than those seen on linear."},
-    {"word": "burnish",       "pos": "verb",      "definition": "To polish by rubbing; to enhance or improve something, especially a reputation.", "example": "The brand used a well-timed CTV campaign to burnish its image ahead of the product launch."},
-    # index 27-29
-    {"word": "intrepid",      "pos": "adjective", "definition": "Fearless and adventurous; notably courageous.", "example": "The intrepid media buyer negotiated directly with the streaming network rather than routing through the programmatic stack."},
-    {"word": "cacophony",     "pos": "noun",      "definition": "A harsh, discordant mixture of sounds.", "example": "The cacophony of competing attribution vendors made it nearly impossible for advertisers to agree on a single source of truth."},
-    {"word": "inculcate",     "pos": "verb",      "definition": "To instill an attitude, habit, or idea by persistent instruction or repetition.", "example": "Great account managers inculcate performance discipline not by mandating it, but by walking clients through the data every week."},
-    # index 30-32
-    {"word": "verdant",       "pos": "adjective", "definition": "Green with grass or other rich vegetation; lush.", "example": "The verdant hillsides in the brand's CTV spot gave the campaign a visual identity that stood out on the streaming platform."},
-    {"word": "confluence",    "pos": "noun",      "definition": "A coming together of people, ideas, or events; the junction of two rivers.", "example": "The platform's early success was a confluence of affordable CTV inventory, first-party data, and a brand eager to experiment."},
-    {"word": "beguile",       "pos": "verb",      "definition": "To charm or enchant someone, sometimes in a deceptive way.", "example": "The platform tried to beguile prospects with eye-catching ROAS case studies that couldn't be independently verified."},
-    # index 33-35
-    {"word": "punctilious",   "pos": "adjective", "definition": "Showing great attention to detail or correct behavior; meticulous.", "example": "The punctilious trafficking manager caught every mismatched creative spec before a single impression was wasted."},
-    {"word": "candor",        "pos": "noun",      "definition": "The quality of being open, honest, and direct in expression.", "example": "She appreciated the agency's candor about the CTV campaign's underperformance, even when the conversation was difficult."},
-    {"word": "conflate",      "pos": "verb",      "definition": "To combine two or more ideas into one, often incorrectly or carelessly.", "example": "It's easy to conflate total reach with incremental reach in CTV reporting when the methodology isn't clearly defined."},
-    # index 36-38
-    {"word": "cogent",        "pos": "adjective", "definition": "Clear, logical, and convincing; powerfully persuasive.", "example": "She made a cogent case for shifting 30% of the linear TV budget into self-serve CTV."},
-    {"word": "ennui",         "pos": "noun",      "definition": "A feeling of listlessness and boredom arising from lack of occupation or excitement.", "example": "A creeping ennui had settled over the linear TV buying team as another quarter passed without a major new client win."},
-    {"word": "buttress",      "pos": "verb",      "definition": "To increase the strength of or give support to; to reinforce.", "example": "She used three independent measurement studies to buttress the case for CTV's incremental reach above linear."},
-    # index 39-41
-    {"word": "propitious",    "pos": "adjective", "definition": "Giving or indicating a good chance of success; favorable.", "example": "The surge in streaming viewership made it a propitious moment to negotiate long-term inventory commitments."},
-    {"word": "panacea",       "pos": "noun",      "definition": "A solution or remedy supposed to cure all problems or difficulties.", "example": "Self-serve CTV is no panacea for every advertiser's media problems, but it does offer compelling reach at accessible minimums."},
-    {"word": "elicit",        "pos": "verb",      "definition": "To draw out a response, answer, or reaction from someone.", "example": "The detailed post-mortem finally elicited an honest conversation about why the CTV creative hadn't resonated with the audience."},
-    # index 42-44
-    {"word": "redoubtable",   "pos": "adjective", "definition": "Formidable and inspiring respect, especially as an opponent.", "example": "The Trade Desk remained a redoubtable force in programmatic CTV, even as well-funded challengers entered the market."},
-    {"word": "penchant",      "pos": "noun",      "definition": "A strong or habitual liking for something or tendency to do it.", "example": "The brand's penchant for 15-second spots translated surprisingly well into the connected TV environment."},
-    {"word": "calibrate",     "pos": "verb",      "definition": "To carefully assess and adjust something for accuracy or effectiveness.", "example": "The team carefully calibrated their CTV frequency caps to avoid overexposing the same household multiple times per day."},
-    # index 45-47
-    {"word": "incisive",      "pos": "adjective", "definition": "Intelligently analytical and clear-thinking; cutting straight to the point.", "example": "Her incisive questions during the platform demo cut straight through the vendor's sales narrative."},
-    {"word": "rectitude",     "pos": "noun",      "definition": "Morally correct behavior or thinking; righteousness.", "example": "His reputation for rectitude in measurement reporting made him the obvious choice to chair the agency's transparency task force."},
-    {"word": "iterate",       "pos": "verb",      "definition": "To repeat a process, making improvements or adjustments with each cycle.", "example": "The creative team iterated on the CTV ad format for six weeks before the completion rate metrics finally improved."},
-    # index 48-50
-    {"word": "evanescent",    "pos": "adjective", "definition": "Soon passing out of sight, memory, or existence; quickly fading.", "example": "The evanescent nature of streaming audiences — constantly churning across platforms — makes long-term loyalty hard to measure."},
-    {"word": "hubris",        "pos": "noun",      "definition": "Excessive pride or self-confidence, often leading to one's downfall.", "example": "The network's hubris about its upfront dominance blinded it to the self-serve CTV threat building beneath."},
-    {"word": "dissemble",     "pos": "verb",      "definition": "To conceal or disguise one's true motives, feelings, or beliefs.", "example": "She had no talent for dissembling; her frustration with the platform's opaque delivery reporting was plain to everyone in the room."},
-    # index 51-53
-    {"word": "mercurial",     "pos": "adjective", "definition": "Subject to sudden or unpredictable changes of mood; volatile.", "example": "CTV CPMs proved mercurial throughout Q4, spiking and dropping within the same week as scatter demand surged."},
-    {"word": "alacrity",      "pos": "noun",      "definition": "Brisk and cheerful readiness to do something.", "example": "The programmatic team accepted the new attribution framework with alacrity, eager to prove incrementality to the CMO."},
-    {"word": "inveigh",       "pos": "verb",      "definition": "To speak or write about something with great hostility or vehement criticism.", "example": "The trade press inveighed against the lack of standardised CTV measurement as the single biggest obstacle to advertiser scale."},
-    # index 54-56
-    {"word": "tenacious",     "pos": "adjective", "definition": "Holding firmly to something; very determined and persistent.", "example": "The tenacious ad ops manager refused to sign off on the campaign until every creative had cleared brand safety review."},
-    {"word": "perspicacity",  "pos": "noun",      "definition": "A ready insight into things; the quality of having a sharp, discerning mind.", "example": "The buyer's perspicacity allowed her to identify the underperforming CTV placements before the client's weekly report surfaced them."},
-    {"word": "enumerate",     "pos": "verb",      "definition": "To mention or list a number of things one by one.", "example": "The post-mortem enumerated every creative format tested across the six-week CTV campaign."},
-    # index 57-59
-    {"word": "recondite",     "pos": "adjective", "definition": "Not known by many people; abstruse or dealing with obscure subject matter.", "example": "His knowledge of the recondite details of the MRC's CTV measurement standards impressed everyone in the review."},
-    {"word": "tenacity",      "pos": "noun",      "definition": "The quality of being very determined and persistent; not giving up.", "example": "It was the team's tenacity in pursuing outcome-based measurement that finally won over the most sceptical client."},
-    {"word": "disambiguate",  "pos": "verb",      "definition": "To remove uncertainty or confusion about the meaning of something.", "example": "The analytics team spent an hour disambiguating the client's vague definition of a 'conversion' before building the attribution report."},
-    # index 60-62
-    {"word": "affable",       "pos": "adjective", "definition": "Friendly and easy to talk to; warmly approachable.", "example": "The new account manager's affable manner made even the most difficult CPM conversation feel collaborative."},
-    {"word": "aberration",    "pos": "noun",      "definition": "A departure from what is normal or expected; an anomaly.", "example": "The 90% completion rate on the 30-second CTV spot was an aberration — the platform average was closer to 72%."},
-    {"word": "abdicate",      "pos": "verb",      "definition": "To fail to fulfill a responsibility; to give up power or a position.", "example": "By outsourcing every media decision to the agency, the brand had effectively abdicated its own data strategy."},
-    # index 63-65
-    {"word": "ardent",        "pos": "adjective", "definition": "Enthusiastic or passionate; strongly felt or expressed.", "example": "She was an ardent advocate for outcome-based CTV measurement long before the rest of the industry caught up."},
-    {"word": "acrimony",      "pos": "noun",      "definition": "Bitterness or ill feeling; sharp hostility in speech or manner.", "example": "The merger talks collapsed under the weight of personal acrimony between the two executive teams."},
-    {"word": "abjure",        "pos": "verb",      "definition": "To solemnly renounce a belief, claim, or course of action.", "example": "Under industry pressure, the platform was eventually forced to abjure its earlier position on third-party audience data."},
-    # index 66-68
-    {"word": "assiduous",     "pos": "adjective", "definition": "Showing great care, attentiveness, and effort; diligent.", "example": "Her assiduous analysis of the viewership data revealed a targeting gap the entire media team had missed."},
-    {"word": "adage",         "pos": "noun",      "definition": "A short statement expressing a general truth; a proverb or maxim.", "example": "The old adage 'half my advertising is wasted' rings less true in CTV, where every impression is measurable and attributable."},
-    {"word": "accede",        "pos": "verb",      "definition": "To agree to a demand or request; to assume a position or office.", "example": "After months of pushback, the publisher finally acceded to the advertiser's request for household-level frequency data."},
-    # index 69-71
-    {"word": "astute",        "pos": "adjective", "definition": "Having an ability to accurately assess situations; shrewd and clever.", "example": "The astute media buyer spotted the underpriced streaming inventory before any other agency on the media plan."},
-    {"word": "aegis",         "pos": "noun",      "definition": "The protection, support, or sponsorship of a particular person or organization.", "example": "The pilot CTV campaign ran under the aegis of the agency's innovation lab before a full market rollout."},
-    {"word": "accentuate",    "pos": "verb",      "definition": "To make a feature more noticeable or prominent; to emphasize.", "example": "The creative was redesigned to accentuate the product's visual appeal on large-screen streaming devices."},
-    # index 72-74
-    {"word": "audacious",     "pos": "adjective", "definition": "Showing a willingness to take bold, daring risks.", "example": "The audacious proposal — to move the entire linear TV budget to self-serve CTV in a single quarter — somehow got approved."},
-    {"word": "affinity",      "pos": "noun",      "definition": "A natural liking or sympathy for someone or something; a connection.", "example": "Research confirmed a strong consumer affinity for brands that advertised consistently during live sports on streaming platforms."},
-    {"word": "adjudicate",    "pos": "verb",      "definition": "To make a formal judgment on a disputed matter.", "example": "A neutral measurement vendor was brought in to adjudicate the discrepancy between the two attribution reports."},
-    # index 75-77
-    {"word": "blithe",        "pos": "adjective", "definition": "Showing a casual and cheerful indifference; carefree or unconcerned.", "example": "The media planner made the audience assumption with a blithe disregard for how significantly CTV CPMs had shifted since the plan was written."},
-    {"word": "anecdote",      "pos": "noun",      "definition": "A short, amusing or interesting story about a real incident or person.", "example": "The CEO opened every agency pitch with an anecdote about a small DTC brand that had scaled profitably on self-serve CTV."},
-    {"word": "ameliorate",    "pos": "verb",      "definition": "To make something bad or unsatisfactory better; to improve a situation.", "example": "The new frequency cap logic was designed to ameliorate the household overexposure problem that had been hurting ad recall scores."},
-    # index 78-80
-    {"word": "candid",        "pos": "adjective", "definition": "Truthful and straightforward; not afraid to speak one's mind.", "example": "His candid assessment of the CTV platform's measurement gaps was exactly what the client needed to hear before committing budget."},
-    {"word": "anomaly",       "pos": "noun",      "definition": "Something that deviates from what is standard, normal, or expected.", "example": "The spike in CTV completion rates during the holiday week was flagged as an anomaly by the platform's delivery monitoring system."},
-    {"word": "amplify",       "pos": "verb",      "definition": "To make larger, louder, or more significant; to expand upon.", "example": "Connected TV's large-screen format tends to amplify both the creative's strengths and its weaknesses in equal measure."},
-    # index 81-83
-    {"word": "circumspect",   "pos": "adjective", "definition": "Wary and careful; unwilling to take risks without due consideration.", "example": "A circumspect approach to the new identity-based targeting methodology saved the campaign from a compliance issue."},
-    {"word": "aphorism",      "pos": "noun",      "definition": "A pithy observation that contains a general truth; a concise maxim.", "example": "The media team had adopted 'reach first, then optimise' as its unofficial aphorism for every new CTV campaign."},
-    {"word": "annul",         "pos": "verb",      "definition": "To declare invalid; to cancel an official decision or legal arrangement.", "example": "The court moved to annul the data licensing agreement on the grounds of material misrepresentation."},
-    # index 84-86
-    {"word": "dauntless",     "pos": "adjective", "definition": "Showing fearlessness and determination; undaunted by difficulty.", "example": "The dauntless programmatic trader continued optimising the CTV campaign through three consecutive nights of poor delivery."},
-    {"word": "aplomb",        "pos": "noun",      "definition": "Self-confidence and poise, especially when dealing with difficult situations.", "example": "She handled the client's pointed questions about brand safety adjacencies with remarkable aplomb."},
-    {"word": "appease",       "pos": "verb",      "definition": "To pacify or relieve by making concessions; to satisfy a demand.", "example": "The revised measurement framework was designed to appease both the brand and the agency without fully satisfying either."},
-    # index 87-89
-    {"word": "deferential",   "pos": "adjective", "definition": "Showing respect and courteous submission to another's opinion or wishes.", "example": "The junior planner was deferential in client meetings but direct and confident in her written media recommendations."},
-    {"word": "approbation",   "pos": "noun",      "definition": "Approval or praise, especially from an official source.", "example": "The CTV strategy launched to broad approbation from a leadership team that had spent months resisting the shift from linear."},
-    {"word": "ascertain",     "pos": "verb",      "definition": "To find out for certain; to establish or determine something definitively.", "example": "Before committing the budget, the team needed to ascertain whether the platform's reach claims were independently verified."},
-    # index 90-92
-    {"word": "diffident",     "pos": "adjective", "definition": "Modest or shy due to a lack of self-confidence; hesitant to assert oneself.", "example": "Despite her deep expertise in programmatic buying, she remained diffident in large client presentations."},
-    {"word": "archetype",     "pos": "noun",      "definition": "A very typical example; a universally recognized original model.", "example": "The performance-focused DTC brand is the archetype customer that self-serve CTV platforms were built to serve."},
-    {"word": "assimilate",    "pos": "verb",      "definition": "To take in and fully understand information; to integrate into a larger group.", "example": "New media buyers were given four weeks to assimilate the platform's attribution methodology before running their first live campaign."},
-    # index 93-95
-    {"word": "discerning",    "pos": "adjective", "definition": "Having or showing good taste, judgment, or understanding; perceptive.", "example": "The discerning media planner will notice the gap between a platform's claimed reach and its independently verified audience figures."},
-    {"word": "ardor",         "pos": "noun",      "definition": "Enthusiasm or passion; a great warmth or intensity of feeling.", "example": "The team's ardor for the CTV product more than compensated for their lack of experience in the streaming advertising space."},
-    {"word": "atone",         "pos": "verb",      "definition": "To make amends for a wrong or injury; to reconcile a past failing.", "example": "The agency spent the next quarter trying to atone for the mismanaged campaign that had burned through the client's upfront budget."},
-    # index 96-98
-    {"word": "ebullient",     "pos": "adjective", "definition": "Cheerful and full of energy; enthusiastically exuberant.", "example": "Her ebullient pitch about CTV's incremental reach left even the most sceptical client leaning forward in their seat."},
-    {"word": "artifice",      "pos": "noun",      "definition": "Clever devices or expedients used to trick someone; cunning or trickery.", "example": "Beneath the polished programmatic dashboard was a great deal of artifice and very little transparency into actual delivery."},
-    {"word": "augment",       "pos": "verb",      "definition": "To make something greater by adding to it; to supplement or enhance.", "example": "The brand decided to augment its traditional linear TV buy with a self-serve CTV layer specifically targeting cord-cutters."},
-    # index 99-101
-    {"word": "effusive",      "pos": "adjective", "definition": "Expressing feelings of gratitude, pleasure, or approval in an unrestrained way.", "example": "The effusive case study buried the critical caveat — results were from a 90-day test, not a full campaign cycle."},
-    {"word": "axiom",         "pos": "noun",      "definition": "A statement regarded as self-evidently true; an established principle or rule.", "example": "In CTV advertising, the axiom 'what gets measured gets optimised' is finally starting to have real meaning."},
-    {"word": "bolster",       "pos": "verb",      "definition": "To support or strengthen; to boost confidence, morale, or a position.", "example": "The new measurement partnership was announced specifically to bolster the platform's credibility with performance-focused advertisers."},
-    # index 102-104
-    {"word": "fastidious",    "pos": "adjective", "definition": "Very attentive to accuracy, detail, and propriety; meticulous.", "example": "The fastidious trafficking manager verified every creative spec and tag before a single CTV impression was served."},
-    {"word": "bastion",       "pos": "noun",      "definition": "A projecting part of a fortification; something that strongly defends a principle.", "example": "Premium streaming inventory remained a bastion of brand-safe ad environments in an otherwise fragmented digital landscape."},
-    {"word": "broach",        "pos": "verb",      "definition": "To raise a sensitive or difficult topic for discussion for the first time.", "example": "The account manager had been waiting for the right moment to broach the subject of shifting remaining linear budget to CTV."},
-    # index 105-107
-    {"word": "fervent",       "pos": "adjective", "definition": "Having or displaying a passionate intensity; earnest and heartfelt.", "example": "The CMO delivered a fervent defence of the CTV investment that persuaded even the most sceptical board member."},
-    {"word": "brevity",       "pos": "noun",      "definition": "Concise and exact use of words; shortness of time or duration.", "example": "The one-page campaign brief's brevity was its greatest virtue — the creative agency knew exactly what was being asked."},
-    {"word": "catalyze",      "pos": "verb",      "definition": "To cause or accelerate a process or series of events.", "example": "The streaming boom catalysed a complete rethinking of how DTC brands approach upper-funnel media investment."},
-    # index 108-110
-    {"word": "forthright",    "pos": "adjective", "definition": "Direct and outspoken; going straight to the point without evasion.", "example": "A forthright assessment of the platform's reach limitations early on saved the brand from an embarrassing overpromise to stakeholders."},
-    {"word": "cachet",        "pos": "noun",      "definition": "The state of being respected or admired; a mark of prestige or quality.", "example": "Running campaigns on premium AVOD inventory carried a cachet that generic programmatic placements simply couldn't match."},
-    {"word": "censure",       "pos": "verb",      "definition": "To express severe official disapproval of someone or something.", "example": "The IAB moved to formally censure the data vendor for failing to disclose its audience measurement methodology."},
-    # index 111-113
-    {"word": "garrulous",     "pos": "adjective", "definition": "Excessively talkative, especially on trivial or irrelevant subjects.", "example": "The garrulous vendor representative turned a scheduled fifteen-minute demo into a ninety-minute product tour."},
-    {"word": "catalyst",      "pos": "noun",      "definition": "Something that precipitates an event or accelerates a process; an agent of change.", "example": "The collapse of third-party cookies proved to be the catalyst for the industry's long-overdue pivot to first-party CTV data."},
-    {"word": "codify",        "pos": "verb",      "definition": "To arrange laws, rules, or principles into a systematic code or structure.", "example": "The measurement team finally codified its attribution methodology into a document that any client or partner could review."},
-    # index 114-116
-    {"word": "genial",        "pos": "adjective", "definition": "Friendly and cheerful; pleasantly warm and good-natured.", "example": "The new account director's genial manner made even tense CPM renegotiations feel constructive rather than adversarial."},
-    {"word": "caveat",        "pos": "noun",      "definition": "A warning or proviso about the conditions or limits of something.", "example": "The agency recommended the CTV strategy, with the caveat that results would require a three-month learning period to interpret."},
-    {"word": "compel",        "pos": "verb",      "definition": "To force or oblige someone to do something; to drive irresistibly.", "example": "The incrementality data was compelling enough to compel even the most linear-loyal media directors to reconsider their budget split."},
-    # index 117-119
-    {"word": "haughty",       "pos": "adjective", "definition": "Arrogantly superior and disdainful; having a high opinion of oneself.", "example": "The haughty DSP representative spent more time dismissing competitors than explaining his own platform's actual capabilities."},
-    {"word": "chasm",         "pos": "noun",      "definition": "A deep fissure; a profound difference between people, views, or groups.", "example": "There remained a chasm between what CTV platforms promised in terms of measurement transparency and what they could actually deliver."},
-    {"word": "concede",       "pos": "verb",      "definition": "To admit that something is true; to yield a point or cede territory.", "example": "The VP conceded that the original CTV budget allocation had been far too conservative given the platform's measurable incrementality."},
-    # index 120-122
-    {"word": "imperious",     "pos": "adjective", "definition": "Assuming power or authority without justification; domineering and arrogant.", "example": "His imperious style during the upfront negotiation put the network's sales team on edge from the opening minute."},
-    {"word": "chicanery",     "pos": "noun",      "definition": "The use of trickery, deception, or sharp practice to achieve a goal.", "example": "The audit revealed years of impression inflation that amounted to financial chicanery buried deep in the delivery reports."},
-    {"word": "confound",      "pos": "verb",      "definition": "To cause surprise or confusion in someone; to prove an expectation wrong.", "example": "The self-serve CTV startup confounded every analyst by out-growing the established DSPs in its first year of operation."},
-    # index 123-125
-    {"word": "implacable",    "pos": "adjective", "definition": "Unable to be appeased, satisfied, or placated; relentlessly determined.", "example": "She faced implacable resistance from the linear TV buying team as she pushed to redirect budget toward streaming."},
-    {"word": "corollary",     "pos": "noun",      "definition": "A practical consequence that follows naturally from something else.", "example": "A natural corollary of the streaming boom is that the linear TV scatter market has become structurally weaker."},
-    {"word": "consolidate",   "pos": "verb",      "definition": "To combine several things into a single more effective whole; to make secure.", "example": "The platform consolidated its four separate DSP integrations into a single self-serve buying interface."},
-    # index 126-128
-    {"word": "impudent",      "pos": "adjective", "definition": "Not showing due respect; boldly rude or impertinent.", "example": "The impudent junior planner cc'd the CMO on his reply to the agency lead's media recommendation."},
-    {"word": "crucible",      "pos": "noun",      "definition": "A place or situation of severe test or trial; a melting pot.", "example": "The first open beta was a crucible that exposed every weak point in the platform's self-serve campaign workflow."},
-    {"word": "contemplate",   "pos": "verb",      "definition": "To think carefully and at length about something; to look thoughtfully at.", "example": "She spent the morning contemplating whether to add a retargeting layer or let the CTV campaign run to a clean prospecting pool."},
-    # index 129-131
-    {"word": "inveterate",    "pos": "adjective", "definition": "Having a particular habit or interest firmly established; habitual or deeply ingrained.", "example": "As an inveterate early riser, she was always the first to spot overnight delivery anomalies in the campaign dashboard."},
-    {"word": "decorum",       "pos": "noun",      "definition": "Behavior or language in keeping with good taste, propriety, and dignity.", "example": "The moderator struggled to maintain decorum as the measurement debate between the two competing vendors grew increasingly heated."},
-    {"word": "contend",       "pos": "verb",      "definition": "To struggle to surmount a difficulty; to assert or maintain a position.", "example": "The programmatic team had to contend with three separate measurement discrepancies before the campaign could officially close."},
-    # index 132-134
-    {"word": "judicious",     "pos": "adjective", "definition": "Having or showing good judgment; sensible and prudent.", "example": "A judicious mix of CTV and social retargeting drove full-funnel results that neither channel could have achieved alone."},
-    {"word": "deluge",        "pos": "noun",      "definition": "A severe flood; an overwhelming quantity or amount of something.", "example": "The self-serve platform's launch triggered a deluge of support tickets that took the customer success team two weeks to clear."},
-    {"word": "corroborate",   "pos": "verb",      "definition": "To confirm or give support to a statement or theory with evidence.", "example": "The incrementality study corroborated the attribution platform's claim that CTV was driving 25% incremental conversions above the base."},
-    # index 135-137
-    {"word": "lachrymose",    "pos": "adjective", "definition": "Tearful or given to weeping; mournful and sad.", "example": "The lachrymose tone of the year-end agency review accurately reflected how difficult the measurement conversations had been."},
-    {"word": "desideratum",   "pos": "noun",      "definition": "Something that is needed or wanted; an essential requirement.", "example": "Independent, cross-platform reach deduplication is the primary desideratum for any serious CTV media plan."},
-    {"word": "crystallize",   "pos": "verb",      "definition": "To make a plan or idea clear and definite; to assume a fixed and clear form.", "example": "The head-to-head platform test helped crystallize which CTV partner would earn the lion's share of the upfront commitment."},
-    # index 138-140
-    {"word": "loquacious",    "pos": "adjective", "definition": "Tending to talk a great deal; very talkative or rambling.", "example": "The loquacious vendor rep ran the platform demo thirty minutes over time and still hadn't reached the reporting section."},
-    {"word": "diatribe",      "pos": "noun",      "definition": "A forceful and bitter verbal attack or tirade against someone or something.", "example": "What started as a constructive campaign debrief quickly became a diatribe about the platform's persistent measurement opacity."},
-    {"word": "cultivate",     "pos": "verb",      "definition": "To develop a quality or skill; to nurture a relationship or environment.", "example": "She had spent years cultivating publisher relationships that proved invaluable when premium streaming inventory became scarce."},
-    # index 141-143
-    {"word": "magnanimous",   "pos": "adjective", "definition": "Generous or forgiving, especially toward rivals or those less powerful.", "example": "The magnanimous agency lead shared her team's CTV playbook with a smaller competitor, knowing a rising tide lifts all boats."},
-    {"word": "dichotomy",     "pos": "noun",      "definition": "A division or contrast between two opposing things.", "example": "The study highlighted a stark dichotomy between what CTV platforms claimed in terms of unique reach and what independent vendors verified."},
-    {"word": "delineate",     "pos": "verb",      "definition": "To describe or indicate something precisely; to portray clearly.", "example": "The campaign brief delineated each channel's role precisely: CTV for reach, social for retargeting, search for conversion."},
-    # index 144-146
-    {"word": "obdurate",      "pos": "adjective", "definition": "Stubbornly refusing to change one's opinion or course of action.", "example": "Despite compelling incrementality data, the obdurate CMO refused to reduce the linear TV budget by even ten percent."},
-    {"word": "dissonance",    "pos": "noun",      "definition": "A lack of harmony; tension or conflict between two elements.", "example": "There was uncomfortable dissonance between the platform's brand-safety promises and the actual content adjacencies logged during the campaign."},
-    {"word": "demarcate",     "pos": "verb",      "definition": "To set the boundaries or limits of something; to mark a clear distinction.", "example": "The new measurement framework clearly demarcated which conversions could be attributed to CTV and which remained statistically unresolved."},
-    # index 147-149
-    {"word": "officious",     "pos": "adjective", "definition": "Asserting authority in an annoyingly overbearing or domineering way; meddlesome.", "example": "The officious brand safety officer rejected three creatives on technicalities that had no bearing on actual audience risk."},
-    {"word": "dossier",       "pos": "noun",      "definition": "A collection of documents about a particular person, subject, or event.", "example": "Before the upfront meeting, the agency assembled a detailed dossier on each publisher's audience overlap, CPM trends, and delivery history."},
-    {"word": "deprecate",     "pos": "verb",      "definition": "To express disapproval of; to strongly criticize or belittle.", "example": "The platform deprecated its legacy pixel-based tracking system in favour of a server-side attribution approach."},
-    # index 150-152
-    {"word": "perfidious",    "pos": "adjective", "definition": "Deceitful and untrustworthy; guilty of betrayal.", "example": "The perfidious data vendor had been selling overlapping audience segments to competing clients without disclosing the conflict."},
-    {"word": "efficacy",      "pos": "noun",      "definition": "The ability to produce a desired or intended result; effectiveness.", "example": "The study measured the efficacy of CTV retargeting by comparing conversion rates against a matched holdout group."},
-    {"word": "diffuse",       "pos": "verb",      "definition": "To spread over a wide area; to reduce tension or concentration gradually.", "example": "The account director stepped in to diffuse the tension between the client and the platform's measurement team."},
-    # index 153-155
-    {"word": "pertinacious",  "pos": "adjective", "definition": "Holding firmly to an opinion or a course of action; stubbornly persistent.", "example": "The pertinacious media buyer refused to accept the platform's default reporting until she had received the underlying delivery logs."},
-    {"word": "elegance",      "pos": "noun",      "definition": "The quality of being pleasingly refined, tasteful, and ingeniously simple.", "example": "The solution's elegance lay in combining CTV viewership data with first-party purchase signals to build a single high-intent audience."},
-    {"word": "discern",       "pos": "verb",      "definition": "To recognize or find out; to perceive something that is not immediately obvious.", "example": "It took careful analysis to discern whether the CTV lift was real or an artefact of the attribution methodology."},
-    # index 156-158
-    {"word": "phlegmatic",    "pos": "adjective", "definition": "Having an unemotional, calm, and stoic temperament; not easily excited.", "example": "His phlegmatic reaction to the unexpected CPM spike allowed him to reallocate budget rationally while the rest of the team panicked."},
-    {"word": "eloquence",     "pos": "noun",      "definition": "Fluent, persuasive, and expressive speech or writing.", "example": "The brevity and eloquence of the campaign brief left the creative agency with no excuse for an off-strategy execution."},
-    {"word": "dispel",        "pos": "verb",      "definition": "To make a doubt, fear, or misconception disappear; to drive away.", "example": "A well-designed incrementality test was enough to dispel most of the board's scepticism about CTV's contribution to revenue."},
-    # index 159-161
-    {"word": "querulous",     "pos": "adjective", "definition": "Complaining in a petulant or whining manner; habitually complaining.", "example": "The querulous tone of the client's weekly emails made it clear the campaign performance was not meeting expectations."},
-    {"word": "emissary",      "pos": "noun",      "definition": "A person sent as a diplomatic agent on a special mission.", "example": "The holding company sent a senior emissary to negotiate more favourable programmatic rates ahead of the upfront commitments."},
-    {"word": "distill",       "pos": "verb",      "definition": "To extract the most important aspects; to purify through concentration.", "example": "The analyst's job was to distill three months of CTV performance data into a single executive slide the CMO could act on."},
-    # index 162-164
-    {"word": "reticent",      "pos": "adjective", "definition": "Not revealing one's thoughts or feelings readily; reserved and restrained.", "example": "He was uncharacteristically reticent in the platform debrief, offering only short answers to the team's direct questions."},
-    {"word": "epiphany",      "pos": "noun",      "definition": "A moment of sudden and great revelation or insight.", "example": "The epiphany came during a routine attribution review — the brand's CTV and social audiences overlapped by less than 12%."},
-    {"word": "diverge",       "pos": "verb",      "definition": "To develop in a different direction from another; to differ.", "example": "The two CTV strategies had started from the same brief but diverged significantly after the first round of in-flight creative testing."},
-    # index 165-167
-    {"word": "sagacious",     "pos": "adjective", "definition": "Having or showing good judgment; wise and discerning.", "example": "The sagacious media director resisted the temptation to chase raw reach and focused instead on household frequency control."},
-    {"word": "ethos",         "pos": "noun",      "definition": "The characteristic spirit of a culture, era, or community; its guiding beliefs.", "example": "The team's ethos — 'measure everything, assume nothing' — made it a natural fit for a performance-driven CTV brief."},
-    {"word": "edify",         "pos": "verb",      "definition": "To instruct or improve someone morally or intellectually.", "example": "The workshop was designed less to sell the platform than to genuinely edify clients about the principles of CTV measurement."},
-    # index 168-170
-    {"word": "sycophantic",   "pos": "adjective", "definition": "Behaving in an obsequious, servile way to gain favor; fawning.", "example": "The sycophantic applause for every new platform feature made it hard for the product team to receive genuine critical feedback."},
-    {"word": "exuberance",    "pos": "noun",      "definition": "The quality of being full of energy, excitement, and cheerfulness.", "example": "The team's exuberance about the platform's new self-serve targeting tools masked some legitimate concerns about scale in smaller markets."},
-    {"word": "embellish",     "pos": "verb",      "definition": "To make more attractive by adding detail; to exaggerate for effect.", "example": "The vendor's case study had been so embellished that the actual campaign performance bore little resemblance to the headline ROAS figure."},
-    # index 171-173
-    {"word": "taciturn",      "pos": "adjective", "definition": "Reserved; saying little; not inclined to talk or share opinions.", "example": "The taciturn data scientist said almost nothing in the meeting, but her single question about the holdout methodology stopped the room cold."},
-    {"word": "fallacy",       "pos": "noun",      "definition": "A mistaken belief; a failure in reasoning that undermines an argument.", "example": "The report exposed the central fallacy in the argument that linear TV reach was interchangeable with streaming audience delivery."},
-    {"word": "embolden",      "pos": "verb",      "definition": "To give someone the courage or confidence to do something.", "example": "Early strong results on the self-serve platform emboldened the brand to triple its CTV investment in the following quarter."},
-    # index 174-176
-    {"word": "truculent",     "pos": "adjective", "definition": "Eager or quick to argue or fight; aggressively defiant.", "example": "The truculent client turned every weekly optimisation call into a debate about the campaign's fundamental strategy."},
-    {"word": "finesse",       "pos": "noun",      "definition": "Intricate and refined skill in handling a delicate or difficult situation.", "example": "Negotiating premium CTV inventory during the upfront requires a certain finesse that not every media buyer develops quickly."},
-    {"word": "emulate",       "pos": "verb",      "definition": "To match or surpass someone by imitation; to follow as a model.", "example": "The challenger brand openly set out to emulate the streaming advertising playbook of its category-leading rival."},
-    # index 177-179
-    {"word": "unflappable",   "pos": "adjective", "definition": "Having or showing calmness in a crisis; not easily agitated or alarmed.", "example": "The unflappable campaign manager kept the team on track even as creative revisions doubled the trafficking workload overnight."},
-    {"word": "foible",        "pos": "noun",      "definition": "A minor weakness or eccentricity in someone's character; a small failing.", "example": "His habit of checking delivery reports at midnight was a well-known foible, but it had saved more than one campaign from going dark."},
-    {"word": "encapsulate",   "pos": "verb",      "definition": "To express the essential features of something succinctly; to enclose.", "example": "The single-sentence creative brief perfectly encapsulated what the CTV spot needed to achieve in its first three seconds."},
-    # index 180-182
-    {"word": "venerable",     "pos": "adjective", "definition": "Accorded a great deal of respect, especially because of age, wisdom, or character.", "example": "The venerable broadcast network was adapting slowly but seriously to the self-serve streaming advertising model."},
-    {"word": "fortitude",     "pos": "noun",      "definition": "Courage and resilience in the face of pain or adversity; mental strength.", "example": "It took real fortitude to push the all-in CTV strategy through in the face of sustained pushback from the linear TV buying team."},
-    {"word": "engender",      "pos": "verb",      "definition": "To cause or give rise to a situation, feeling, or condition.", "example": "The shift to outcome-based CTV buying engendered genuine collaboration between the media, data science, and creative teams."},
-    # index 183-185
-    {"word": "verbose",       "pos": "adjective", "definition": "Using or expressed in more words than are needed; wordy.", "example": "The verbose platform specification document made it nearly impossible to identify which campaign settings actually mattered."},
-    {"word": "fruition",      "pos": "noun",      "definition": "The realization or fulfillment of a plan or project; coming to maturity.", "example": "After two years of product development, the self-serve CTV vision finally came to fruition at the annual upfront presentation."},
-    {"word": "entrench",      "pos": "verb",      "definition": "To establish something so firmly that change is difficult; to embed deeply.", "example": "Years of reliance on GRP-based metrics had entrenched habits that the new outcome-focused CTV framework struggled to displace."},
-    # index 186-188
-    {"word": "vigilant",      "pos": "adjective", "definition": "Keeping careful watch for possible danger or difficulties; alert.", "example": "Staying vigilant about brand safety adjacencies in streaming content is a daily operational responsibility, not a one-time platform setting."},
-    {"word": "gambit",        "pos": "noun",      "definition": "An action intended to gain an advantage, especially at the outset of a situation.", "example": "Opening the upfront negotiation with an extreme rate anchor was a classic gambit, and both sides knew exactly what was happening."},
-    {"word": "epitomize",     "pos": "verb",      "definition": "To be a perfect example of a quality or type; to summarize or exemplify.", "example": "The DTC brand's performance CTV strategy epitomised exactly the outcome-based approach the platform had been built to enable."},
-    # index 189-191
-    {"word": "wistful",       "pos": "adjective", "definition": "Having or showing a feeling of vague, tender longing; yearningly nostalgic.", "example": "The veteran buyer cast a wistful glance at the old upfront order form, remembering when the entire market could be planned on a single spreadsheet."},
-    {"word": "genesis",       "pos": "noun",      "definition": "The origin or beginning of something; the point at which it came into being.", "example": "The genesis of the platform lay in the founders' deep frustration with the opacity and inefficiency of traditional TV buying."},
-    {"word": "espouse",       "pos": "verb",      "definition": "To adopt or support a cause or belief; to advocate strongly for.", "example": "She had espoused outcome-based CTV buying for years before the rest of the industry finally caught up."},
-    # index 192-194
-    {"word": "zealous",       "pos": "adjective", "definition": "Having or showing great energy or enthusiasm in pursuit of a cause or goal.", "example": "The zealous new campaign manager had already optimised the audience segments before the creative had even been approved."},
-    {"word": "harbinger",     "pos": "noun",      "definition": "A person or thing that announces or signals the approach of another.", "example": "The sharp multi-quarter decline in linear TV ratings was the harbinger of the budget migration to streaming that followed."},
-    {"word": "exhort",        "pos": "verb",      "definition": "To strongly encourage or urge someone to do something.", "example": "The agency VP exhorted the media team to develop CTV expertise before their clients found the platform without them."},
-    # index 195-197
-    {"word": "acerbic",       "pos": "adjective", "definition": "Sharp and forthright; having a bitter, cutting quality in speech or manner.", "example": "His acerbic commentary on the walled-garden data practices was entertaining to the trade press, though considerably less so to the platforms."},
-    {"word": "hegemony",      "pos": "noun",      "definition": "Leadership or dominance of one group over others in a particular domain.", "example": "The new entrant's rapid growth threatened the incumbent DSP's long-standing hegemony in programmatic CTV buying."},
-    {"word": "expedite",      "pos": "verb",      "definition": "To make an action or process happen sooner; to speed up or accelerate.", "example": "The immovable Q4 launch date meant every effort was made to expedite the creative approval and trafficking process."},
-    # index 198-200
-    {"word": "apposite",      "pos": "adjective", "definition": "Apt in the circumstances or in relation to something; highly pertinent.", "example": "His remark about diminishing returns on reach was oddly apposite given the frequency-cap debate that erupted immediately after."},
-    {"word": "impasse",       "pos": "noun",      "definition": "A situation in which no progress is possible; a deadlock.", "example": "The upfront negotiation reached an impasse when neither the agency nor the streaming network would move on CPM floors."},
-    {"word": "explicate",     "pos": "verb",      "definition": "To analyze and develop an idea in detail; to explain clearly and fully.", "example": "The data scientist spent thirty minutes explicating the difference between multi-touch attribution and incrementality testing for the client."},
-    # index 201-203
-    {"word": "auspicious",    "pos": "adjective", "definition": "Giving or indicating a good chance of success; favorable.", "example": "Closing the largest self-serve CTV deal in the company's history on day one was an auspicious start for the new VP of Sales."},
-    {"word": "imperative",    "pos": "noun",      "definition": "An essential or urgent thing; an authoritative command or rule.", "example": "In a fragmented streaming landscape, a first-party data strategy is a competitive imperative, not an optional future initiative."},
-    {"word": "extrapolate",   "pos": "verb",      "definition": "To extend a conclusion or trend to an unknown situation beyond the data.", "example": "You can't safely extrapolate from three months of CTV data what the full-year incrementality picture will look like."},
-    # index 204-206
-    {"word": "capacious",     "pos": "adjective", "definition": "Having a lot of space inside; roomy; able to hold a great deal.", "example": "The capacious war room was commandeered for the final two weeks of Q4 campaign trafficking."},
-    {"word": "largesse",      "pos": "noun",      "definition": "Generosity in bestowing money, gifts, or favors; liberality.", "example": "The streaming network's year-end largesse extended to bonus impressions for every client who had met their upfront commitments."},
-    {"word": "facilitate",    "pos": "verb",      "definition": "To make an action, process, or interaction easier or smoother.", "example": "The new integration was designed to facilitate seamless audience syncing between the brand's CRM and the CTV buying platform."},
-    # index 207-209
-    {"word": "caustic",       "pos": "adjective", "definition": "Sarcastic in a scathing way; able to destroy or damage through sharp speech.", "example": "The caustic trade press review of the platform's new targeting product was pointed, but its core technical criticism was accurate."},
-    {"word": "lexicon",       "pos": "noun",      "definition": "The vocabulary of a person, language, or branch of knowledge.", "example": "The onboarding guide introduced new advertisers to the platform's extensive lexicon — from 'completion rate' to 'household frequency cap.'"},
-    {"word": "fathom",        "pos": "verb",      "definition": "To understand something after much thought; to comprehend fully.", "example": "She couldn't fathom why the team had launched the CTV campaign without setting household frequency caps from day one."},
-    # index 210-212
-    {"word": "clandestine",   "pos": "adjective", "definition": "Kept secret, especially because illicit or potentially damaging.", "example": "The clandestine data-sharing arrangement between the two publishers was uncovered during a routine compliance audit."},
-    {"word": "lore",          "pos": "noun",      "definition": "A body of traditions, knowledge, or stories held by a particular group.", "example": "Every long-tenured programmatic trader at the agency carried irreplaceable institutional lore about which streaming publishers actually delivered on their guarantees."},
-    {"word": "forestall",     "pos": "verb",      "definition": "To prevent something from happening by taking action in advance; to preempt.", "example": "The detailed pre-campaign FAQ was written specifically to forestall the attribution questions that always emerged mid-flight."},
-    # index 213-215
-    {"word": "contentious",   "pos": "adjective", "definition": "Causing or likely to cause argument or controversy; disputed.", "example": "The contentious decision to move 40% of the linear budget to self-serve CTV divided the media planning team for months."},
-    {"word": "maelstrom",     "pos": "noun",      "definition": "A powerful whirlpool; a situation of confused, violent, or turbulent activity.", "example": "The ad tech consolidation wave dropped the agency into a maelstrom of renegotiated contracts and competing platform claims."},
-    {"word": "formulate",     "pos": "verb",      "definition": "To create or prepare a strategy, plan, or idea in a systematic way.", "example": "The strategist spent two weeks formulating a competitive response to the rival platform's self-serve product announcement."},
-    # index 216-218
-    {"word": "decorous",      "pos": "adjective", "definition": "In keeping with good taste, propriety, and dignity; proper and seemly.", "example": "The handover between the outgoing and incoming media agency was decorous and professional, even given the difficult circumstances."},
-    {"word": "malaise",       "pos": "noun",      "definition": "A general feeling of discomfort, unease, or lack of wellbeing; dissatisfaction.", "example": "A subtle malaise had settled over the linear TV sales team after three consecutive quarters of declining upfront commitments."},
-    {"word": "fortify",       "pos": "verb",      "definition": "To make stronger or more resistant; to strengthen mentally or physically.", "example": "The pre-brief session was designed to fortify the team's confidence before a high-stakes review of six months of CTV performance."},
-    # index 219-221
-    {"word": "dilatory",      "pos": "adjective", "definition": "Slow to act; intended to cause delay; not prompt.", "example": "The publisher's dilatory response to the frequency cap request allowed the campaign's household overexposure to worsen significantly."},
-    {"word": "manifesto",     "pos": "noun",      "definition": "A public declaration of intentions, policies, or views issued by a person or group.", "example": "The programmatic team published a short manifesto setting out its principles for transparent, outcome-based CTV buying."},
-    {"word": "foment",        "pos": "verb",      "definition": "To instigate or stir up trouble, rebellion, or discord.", "example": "The anonymous trade post was widely seen as an attempt to foment distrust between advertisers and the streaming measurement platforms."},
-    # index 222-224
-    {"word": "doleful",       "pos": "adjective", "definition": "Expressing sorrow or misery; mournful and sad.", "example": "The doleful tone of the mid-campaign report accurately reflected how far performance had fallen short of the initial projections."},
-    {"word": "minutiae",      "pos": "noun",      "definition": "The small, precise, or trivial details of something; fine points.", "example": "He was so absorbed in the minutiae of the insertion order that he missed the problematic CPM floor buried in the headline clause."},
-    {"word": "garner",        "pos": "verb",      "definition": "To gather or collect; to acquire or earn something, especially gradually.", "example": "The self-serve CTV platform had garnered over a thousand active advertisers before it officially exited beta."},
-    # index 225-227
-    {"word": "eclectic",      "pos": "adjective", "definition": "Deriving ideas, style, or taste from a broad and diverse range of sources.", "example": "Her eclectic background — spanning linear TV, programmatic display, and performance marketing — made her uniquely suited for the head of CTV role."},
-    {"word": "nexus",         "pos": "noun",      "definition": "A connection or series of connections; the central and most important point.", "example": "The demand-side platform had positioned itself as the nexus through which an entire ecosystem's CTV inventory and audience data would flow."},
-    {"word": "glean",         "pos": "verb",      "definition": "To obtain information or understanding bit by bit from various sources.", "example": "From the sparse delivery logs, she was able to glean that the campaign had been consistently pacing behind its daily impression target."},
-    # index 228-230
-    {"word": "egregious",     "pos": "adjective", "definition": "Outstandingly bad; shocking in its severity or magnitude.", "example": "The egregious brand safety failure — ads served adjacent to extremist content — had been sitting in the delivery logs undetected for a full week."},
-    {"word": "nuance",        "pos": "noun",      "definition": "A subtle difference in meaning, expression, or tone; a fine distinction.", "example": "The best measurement partners were the ones who could grasp the nuance between reach overlap and truly incremental, unduplicated reach."},
-    {"word": "grapple",       "pos": "verb",      "definition": "To struggle to overcome a problem or difficulty; to wrestle with.", "example": "The ad tech team had been grappling with the same cross-device identity resolution problem for two consecutive quarters."},
-    # index 231-233
-    {"word": "elusive",       "pos": "adjective", "definition": "Difficult to find, catch, or achieve; tending to evade grasp or understanding.", "example": "True cross-platform, deduplicated reach measurement remained elusive despite dozens of industry-led attempts to standardise it."},
-    {"word": "onus",          "pos": "noun",      "definition": "Something that is one's duty or responsibility; a burden.", "example": "The onus to prove CTV's incremental contribution to revenue fell squarely on the team that had recommended the budget shift."},
-    {"word": "impede",        "pos": "verb",      "definition": "To delay or block the progress or action of; to obstruct.", "example": "Misaligned KPIs between the brand and the agency impeded progress on the shared CTV measurement framework for weeks."},
-    # index 234-236
-    {"word": "enigmatic",     "pos": "adjective", "definition": "Difficult to interpret or understand; mysterious and puzzling.", "example": "The CEO's enigmatic comments about the platform's forthcoming measurement product left analysts and advertisers with more questions than answers."},
-    {"word": "paradigm",      "pos": "noun",      "definition": "A typical example or pattern; a framework of ideas, assumptions, or practices.", "example": "The shift from appointment viewing to on-demand streaming fundamentally changed the paradigm within which media planners had operated for two decades."},
-    {"word": "infer",         "pos": "verb",      "definition": "To deduce or conclude something from evidence and reasoning rather than explicit statement.", "example": "From the sharp drop in delivery volume, she inferred that the audience segment had been exhausted well ahead of the campaign's scheduled end."},
-    # index 237-239
-    {"word": "equivocal",     "pos": "adjective", "definition": "Open to more than one interpretation; ambiguous or uncertain.", "example": "The platform's equivocal response to questions about third-party measurement access left agency buyers uncertain how to proceed."},
-    {"word": "paradox",       "pos": "noun",      "definition": "A seemingly contradictory statement that may nonetheless be true; a self-contradiction.", "example": "The CTV paradox — that premium, brand-safe inventory often underperforms on short-term direct-response metrics — is well documented but rarely discussed openly."},
-    {"word": "instigate",     "pos": "verb",      "definition": "To bring about or initiate an action or event, especially a problematic one; to provoke.", "example": "Nobody could agree on who had instigated the move from GRP-based to outcome-based measurement, but everyone agreed it was long overdue."},
-    # index 240-242
-    {"word": "esoteric",      "pos": "adjective", "definition": "Intended for or understood by only a small, specialized group; highly specialized.", "example": "Her knowledge of the esoteric details of the MRC's viewability and invalid traffic standards proved invaluable during the platform audit."},
-    {"word": "prerogative",   "pos": "noun",      "definition": "A right or privilege exclusive to a particular person or group.", "example": "Setting the KPI framework before the campaign goes live is the client's prerogative; hitting it is the agency's."},
-    {"word": "invoke",        "pos": "verb",      "definition": "To cite or appeal to something as an authority or justification; to call upon.", "example": "The media buyer invoked the platform's contractual make-good clause when the end-of-month delivery reports came in significantly short."},
-    # index 243-245
-    {"word": "immutable",     "pos": "adjective", "definition": "Unchanging over time or incapable of being changed; permanent.", "example": "The one immutable rule on the team was that no CTV campaign could go live without an independent third-party measurement tag in place."},
-    {"word": "provenance",    "pos": "noun",      "definition": "The place of origin or source of something; a record of ownership or history.", "example": "Knowing the provenance of the audience segment data was essential before any targeting decision could be made with confidence."},
-    {"word": "marshal",       "pos": "verb",      "definition": "To arrange or organize people, arguments, or resources effectively and efficiently.", "example": "She marshaled every available piece of incrementality evidence before presenting the CTV business case to a sceptical board."},
-    # index 246-248
-    {"word": "incongruous",   "pos": "adjective", "definition": "Not in harmony with the surrounding or other elements; out of place.", "example": "The formal upfront contract language felt incongruous on a self-serve platform that prided itself on accessibility and speed."},
-    {"word": "rapprochement", "pos": "noun",      "definition": "The reestablishment of harmonious relations after a period of conflict or estrangement.", "example": "The joint measurement initiative served as a rapprochement after two years of public tension between the agency coalition and the streaming publishers."},
-    {"word": "navigate",      "pos": "verb",      "definition": "To plan or direct a route through a complex environment; to find a way through.", "example": "Learning to navigate the self-serve platform's audience targeting and frequency control tools was a skill that took most buyers several weeks to develop."},
-    # index 249-251
-    {"word": "ineffable",     "pos": "adjective", "definition": "Too great or extreme to be expressed in words; defying description.", "example": "There is an ineffable satisfaction in watching a CTV campaign's incrementality numbers come back exactly as the team had predicted."},
-    {"word": "rancor",        "pos": "noun",      "definition": "Bitterness or resentfulness that has built up over time; long-standing ill will.", "example": "The rancor from the original attribution dispute never fully dissipated, even after the joint measurement framework was formally agreed."},
-    {"word": "obviate",       "pos": "verb",      "definition": "To remove a need or difficulty; to prevent a problem from arising.", "example": "A clear measurement plan agreed before launch would have obviated the entire attribution argument at the campaign's close."},
-    # index 252-254
-    {"word": "inexorable",    "pos": "adjective", "definition": "Impossible to stop or prevent; continuing without any possibility of being changed.", "example": "The inexorable shift of viewing hours from linear TV to streaming has made CTV investment a strategic necessity rather than an experiment."},
-    {"word": "recourse",      "pos": "noun",      "definition": "A source of help in a difficult situation; the right to take legal action.", "example": "Without a clear escalation process, advertisers had no meaningful recourse when a platform's delivery fell consistently short of its guarantees."},
-    {"word": "ostracize",     "pos": "verb",      "definition": "To exclude from a society, group, or activity; to shun or banish.", "example": "The agency informally ostracised any vendor caught misrepresenting delivery data, regardless of how competitive their rates were."},
-    # index 255-257
-    {"word": "insipid",       "pos": "adjective", "definition": "Lacking flavor, vigor, or interest; dull and unexciting.", "example": "The insipid 30-second spot — a direct lift from the linear version — failed to hold attention past the first five seconds on streaming devices."},
-    {"word": "reprieve",      "pos": "noun",      "definition": "A cancellation or postponement of a punishment or difficulty; temporary relief.", "example": "The Q4 budget extension was a welcome reprieve for the CTV team, but the pressure to show measurable results was unrelenting."},
-    {"word": "interpolate",   "pos": "verb",      "definition": "To insert something between existing elements; to estimate values between known data points.", "example": "The measurement model was designed to interpolate viewership estimates for small audience segments where direct measurement data was unavailable."},
-    # index 258-260
-    {"word": "lucid",         "pos": "adjective", "definition": "Expressed clearly and easily understood; mentally clear and rational.", "example": "The most lucid explanation of the platform's attribution model came not from the documentation but from a ten-minute walkthrough with the data team."},
-    {"word": "resonance",     "pos": "noun",      "definition": "The quality of evoking a response; the ability to evoke significance or meaning.", "example": "The campaign's resonance with cord-cutting households surprised even the creative team that had produced the spot."},
-    {"word": "kindle",        "pos": "verb",      "definition": "To light a fire; to arouse or inspire a feeling or quality.", "example": "The streaming platform's entry into self-serve advertising kindled a competitive intensity the market hadn't seen since the early days of programmatic."},
+TV_FACTS: list[str] = [
+    "NBC was founded in 1926, making it the oldest major broadcast network in the United States.",
+    "The Today Show debuted on NBC in January 1952 and has aired continuously ever since.",
+    "NBC's peacock logo was introduced in 1956 to encourage viewers to buy color television sets.",
+    "Comcast acquired NBCUniversal in 2011 for $30 billion in one of the largest media deals in history.",
+    "Seinfeld, which aired on NBC from 1989 to 1998, is still one of the highest-earning syndicated shows ever made.",
+    "The first Super Bowl was broadcast simultaneously on NBC and CBS in January 1967.",
+    "NBC was the first network to broadcast a coast-to-coast live television program, in 1951.",
+    "Friends generated over $1 billion in syndication revenue for NBC within its first decade off air.",
+    "Peacock reached 34 million paid subscribers by 2024, making it one of the fastest-growing streaming platforms.",
+    "US CTV advertising spend is projected to exceed $40 billion by 2027, driven largely by premium publisher inventory.",
+    "Saturday Night Live first aired on NBC on October 11, 1975, and remains the longest-running live sketch comedy show in television history.",
+    "The Tonight Show with Steve Allen premiered on NBC in 1954 and has been on air for over 70 years.",
+    "NBC's coverage of the 1964 Tokyo Olympics marked the first time the network broadcast the Summer Games.",
+    "ER, which ran on NBC from 1994 to 2009, is one of the highest-rated drama series in television history.",
+    "The first commercial color television broadcast in the US was made by NBC in 1954.",
+    "NBC Universal was formed in 2004 when Vivendi Universal Entertainment merged with NBC.",
+    "The West Wing won 26 Emmy Awards during its seven-season run on NBC from 1999 to 2006.",
+    "NBC's Cheers ran for 11 seasons and produced one of the most-watched series finales in US TV history.",
+    "The first paid television advertisement in history aired on NBC on July 1, 1941.",
+    "NBC Sports holds broadcast rights to NFL Sunday Night Football, consistently the most-watched primetime program in America.",
+    "Law & Order, which premiered on NBC in 1990, became the longest-running primetime drama in US television history.",
+    "Universal Pictures, now part of NBCUniversal, was founded in 1912, making it one of Hollywood's oldest studios.",
+    "The Tonight Show has been hosted by Steve Allen, Jack Paar, Johnny Carson, Jay Leno, Conan O'Brien, and Jimmy Fallon.",
+    "NBC's The Blacklist launched in 2013 and became one of the most-watched dramas across linear and streaming platforms.",
+    "GE owned NBC from 1986 to 2004, a period that included the launches of MSNBC and CNBC.",
+    "CNBC launched in 1989 and has become the world's leading business and financial news network.",
+    "MSNBC launched in 1996 as a joint venture between Microsoft and NBC.",
+    "NBCUniversal operates over 30 television channels worldwide across cable, broadcast, and streaming.",
+    "NBC's broadcast home at 30 Rockefeller Plaza in New York has been a landmark since 1933.",
+    "The Office, NBC's adaptation of the British series, ran from 2005 to 2013 and remains one of the most-streamed shows ever.",
+    "NBC's Parks and Recreation launched in 2009 and became a streaming cult hit long after its 2015 finale.",
+    "Brooklyn Nine-Nine was rescued from cancellation by NBC in 2018 after Fox dropped it, running for three more seasons.",
+    "The 2008 Beijing Olympics on NBC drew a record 215 million viewers over its 17-day run.",
+    "NBC's Sunday Night Football has been the most-watched primetime show in the US for over a decade straight.",
+    "Peacock launched in July 2020 and was one of the last major streaming platforms to enter the market.",
+    "The Universal Studios theme parks, operated by NBCUniversal, attract over 50 million visitors per year globally.",
+    "NBCUniversal's news division includes NBC News, MSNBC, CNBC, Today, and NBC News NOW.",
+    "NBC Nightly News has aired since 1970 and remains one of the top-rated evening newscasts in the country.",
+    "Dateline NBC, launched in 1992, is one of the longest-running prime-time news magazine programs on US television.",
+    "NBC Sports covered every Summer Olympics from 1988 through 2024, a 36-year run.",
+    "The 1994 figure skating rivalry between Tonya Harding and Nancy Kerrigan helped NBC attract its biggest sports audience at the time.",
+    "NBC's Will & Grace, which ran from 1998 to 2006 and was revived from 2017 to 2020, was groundbreaking in its LGBT representation.",
+    "30 Rock, loosely based on the production of Saturday Night Live, aired on NBC from 2006 to 2013 and won 16 Emmy Awards.",
+    "NBC's Frasier ran for 11 seasons and won the Primetime Emmy for Outstanding Comedy Series five consecutive years.",
+    "The Biggest Loser premiered on NBC in 2004 and spawned numerous international adaptations.",
+    "NBCUniversal spent $7.65 billion to acquire broadcast rights to the 2032 and 2034 Olympic Games.",
+    "The NBC chimes — three notes G-E-C — were first used in 1931 and became one of the most recognized audio logos in broadcast history.",
+    "Television advertising in the US exceeded $60 billion in 2023, with CTV accounting for the fastest-growing segment.",
+    "The first television remote control was introduced in 1950, the same year NBC launched its first regular news programming.",
+    "CTV impressions grew more than 20% year-over-year in 2023 as viewers shifted from linear to streaming platforms.",
+    "The average US household now receives over 100 channels but regularly watches fewer than 15 of them.",
+    "NBC's Peacock has exclusive streaming rights to WWE programming, adding a large and loyal sports entertainment fanbase.",
+    "Universal Pictures' Jurassic Park franchise has grossed over $6 billion globally, making it one of NBCUniversal's most valuable properties.",
+    "The Emmy Awards ceremony was first broadcast on television by NBC in 1949.",
+    "NBC aired the first-ever late-night talk show, Broadway Open House, in 1950.",
+    "Connected TV households in the US surpassed 85% penetration by 2024.",
+    "Programmatic CTV advertising allows buyers to purchase individual impressions in real time, similar to digital display advertising.",
+    "Ad-supported streaming tiers have helped networks like Peacock monetize audiences who resist subscription fees.",
+    "NBCUniversal's One Platform unifies linear, streaming, and digital ad inventory for cross-screen campaign buys.",
+    "The upfront market, in which advertisers commit spending before the TV season begins, has existed since the early 1960s.",
+    "Addressable TV advertising enables brands to serve different ads to different households watching the same program.",
+    "The CPM for premium CTV inventory averaged between $25 and $40 in 2023, well above most digital display rates.",
+    "Comcast's FreeWheel is one of the largest ad technology platforms for premium video advertising worldwide.",
+    "NBCUniversal's advertising revenue exceeded $8 billion in 2022 across all of its platforms.",
+    "The first TV advertisement in the UK aired in 1955, nearly 14 years after the US debuted paid TV ads.",
+    "A 30-second Super Bowl ad cost approximately $7 million in 2024, up from $42,000 at the first Super Bowl in 1967.",
+    "Nielsen ratings, the primary measurement currency for US TV advertising, have been used since 1950.",
+    "The transition from traditional Nielsen ratings to impression-based measurement has been one of the biggest industry shifts of the 2020s.",
+    "Streaming platforms collectively surpassed traditional broadcast and cable TV in total viewing time for the first time in 2022.",
+    "NBC Sports Group was dissolved in 2022 when Comcast restructured, moving most of its sports content to Peacock.",
+    "The Golf Channel, owned by NBCUniversal, reaches over 60 million US households.",
+    "USA Network, part of NBCUniversal, was one of the first cable channels to invest heavily in original scripted programming.",
+    "Suits, originally a USA Network show, became the most-streamed show in Netflix history in 2023.",
+    "NBCUniversal owns Bravo, the cable network behind the long-running Real Housewives franchise.",
+    "The Real Housewives franchise, launched by Bravo in 2006, has spawned over 20 different city-based editions.",
+    "Oxygen, NBCUniversal's true crime cable network, consistently ranks among the top-rated cable networks in its genre.",
+    "SYFY, owned by NBCUniversal, is one of the few cable networks dedicated exclusively to science fiction and fantasy programming.",
+    "E! Entertainment, part of NBCUniversal, covers celebrity news and produces the Emmy red carpet show Live from the Red Carpet.",
+    "Telemundo, acquired by NBC in 2001, is the second-largest Spanish-language broadcast network in the United States.",
+    "Telemundo's digital reach across streaming and social platforms has grown more than 50% since 2019.",
+    "NBC's Must See TV lineup in the 1990s — including Seinfeld, Friends, and ER — made Thursday night appointment television.",
+    "Appointment television viewership has steadily declined as DVR and streaming give audiences control over when they watch.",
+    "By 2024, over 50% of US adults watched some television exclusively through a streaming platform.",
+    "This Is Us premiered on NBC in 2016 and became one of the most-watched broadcast dramas of the streaming era.",
+    "NBC's Chicago franchise, produced by Dick Wolf, includes Chicago Fire, Chicago PD, and Chicago Med.",
+    "Dick Wolf's Law & Order franchise across NBC and Peacock spans more than 30 years of continuous production.",
+    "The Voice, NBC's singing competition, has aired since 2011 and helped revive the network's Monday night ratings.",
+    "America's Got Talent, which airs on NBC, has been one of the most-watched summer shows since its 2006 premiere.",
+    "The legendary talk show host Johnny Carson hosted The Tonight Show on NBC for 30 years, from 1962 to 1992.",
+    "Jay Leno's first run as Tonight Show host ran from 1992 to 2009, making him the longest-tenured solo host in the show's history.",
+    "Conan O'Brien hosted Late Night on NBC from 1993 to 2009 before his short-lived tenure on The Tonight Show.",
+    "Jimmy Fallon took over The Tonight Show from Jay Leno in 2014, relocating production back to New York City.",
+    "The 1969 moon landing broadcast was covered live by NBC, drawing one of the largest television audiences in history.",
+    "NBC's coverage of the O.J. Simpson verdict in 1995 attracted over 100 million simultaneous US viewers.",
+    "RCA, the parent company of NBC, introduced color television sets to the US market in 1954.",
+    "David Sarnoff, who founded RCA and NBC, is widely regarded as the father of American broadcasting.",
+    "The NBC Radio Network, launched in 1926, preceded the television network by over two decades.",
+    "NBC Television launched its first regular programming schedule in 1939, broadcasting to a small number of households in New York.",
+    "The Howdy Doody Show, which aired on NBC from 1947 to 1960, was one of the first successful children's programs in TV history.",
+    "The 1960 presidential debate between Kennedy and Nixon, broadcast on all three networks, permanently changed the role of television in politics.",
+    "Television advertising revenue in the US first exceeded $1 billion in 1955.",
+    "The introduction of the VCR in the late 1970s was initially opposed by NBC and other networks as a threat to advertising revenue.",
+    "TiVo, introduced in 1999, allowed viewers to skip commercials for the first time at scale, alarming the broadcast industry.",
+    "DVR penetration in US households peaked at around 50% before streaming services began to replace the technology.",
+    "The TV advertising market contracted sharply during the 2008 financial crisis, losing over 10% of revenue in a single year.",
+    "The rise of mobile video viewing has expanded the definition of television to include smartphones and tablets.",
+    "NBCUniversal's digital properties collectively reach over 200 million unique users per month.",
+    "The 2020 Tokyo Olympics, delayed by COVID-19, was broadcast by NBC on Peacock alongside linear channels for the first time.",
+    "The 2022 Beijing Winter Olympics saw NBC shift more live coverage to Peacock than any previous Olympic Games.",
+    "Peacock offered more streaming hours of Olympic coverage in 2024 than any broadcaster had offered in previous Games.",
+    "NBCUniversal's Paris 2024 Olympics coverage broke records for streaming consumption across Peacock.",
+    "The Super Bowl has been the most-watched single event on US television every year since at least 1990.",
+    "Super Bowl XLIX on NBC in 2015 drew over 114 million viewers, setting a US television record at the time.",
+    "Super Bowl commercials are widely considered the most effective single-day brand-building opportunities in US advertising.",
+    "NBC, CBS, ABC, and Fox together are known as the Big Four broadcast networks in the United States.",
+    "Broadcast television reaches approximately 90% of US households via antenna, cable, or satellite.",
+    "The share of primetime viewing attributed to Big Four networks fell from over 80% in 1980 to under 30% by 2020.",
+    "Cable television surpassed broadcast in total primetime ratings share for the first time in 2008.",
+    "Streaming platforms surpassed cable in total viewing minutes for the first time in July 2022.",
+    "Netflix became the first streaming service to win the Primetime Emmy Award for Outstanding Drama Series in 2022.",
+    "YouTube is now counted as a CTV inventory source alongside Peacock and Hulu by major media buyers.",
+    "Amazon Prime Video launched an ad-supported tier in early 2024, adding significant new scale to the CTV marketplace.",
+    "Disney+ added an ad-supported tier in 2022, marking a significant expansion of premium streaming ad inventory.",
+    "Hulu pioneered the ad-supported streaming model beginning in 2008 and has been a Peacock competitor ever since.",
+    "NBCUniversal sold its remaining stake in Hulu to Disney in 2023 as part of a pre-existing buyout agreement.",
+    "Virtual MVPDs such as YouTube TV, Sling TV, and FuboTV grew to over 15 million US subscribers by 2023.",
+    "Programmatic advertising for television began to gain traction in 2014 and has grown into a multi-billion dollar market.",
+    "NBCUniversal's One Platform initiative, launched in 2019, was one of the first unified cross-screen ad buying systems from a major broadcaster.",
+    "Frequency capping across screens has become one of the most-requested features from CTV advertisers.",
+    "Identity resolution tools now allow advertisers to connect CTV ad exposures to outcomes like website visits and purchases.",
+    "Clean room technology enables advertisers and publishers to match audience data without sharing personally identifiable information.",
+    "Upfront commitments for streaming inventory surpassed $1 billion for the first time in 2022.",
+    "The shift from guaranteed ratings to impression-based guarantees has been one of the most significant structural changes in TV buying.",
+    "NBCUniversal introduced its Audience Targeting Platform to allow data-driven targeting across linear and streaming in a single buy.",
+    "Contextual targeting has gained renewed interest in CTV as signal loss from mobile identifiers reduces behavioral targeting precision.",
+    "Comcast Advertising's FreeWheel serves tens of billions of ad requests per year from premium video publishers.",
+    "The IAB defines CTV as any television set connected to the internet through a built-in smart TV OS or an external streaming device.",
+    "Roku is the leading CTV platform in the US by active accounts, with over 80 million accounts as of 2024.",
+    "Amazon Fire TV is the second-largest CTV platform in the US, powered by deep integration with the Alexa voice ecosystem.",
+    "Apple TV has positioned itself as a premium CTV device and operates the Apple TV+ streaming service.",
+    "Samsung, LG, and Vizio are the largest manufacturers of smart TVs with built-in ad-supported streaming in the US.",
+    "Vizio, acquired by Walmart in 2024, gives the retail giant direct access to SmartCast TV and first-party shopper purchase data.",
+    "Walmart's acquisition of Vizio was widely seen as a direct challenge to Amazon's retail media and CTV advertising strategy.",
+    "Retail media networks are increasingly integrating with CTV platforms to connect purchase data to television ad exposure.",
+    "The Trade Desk's OpenPath initiative aims to create direct relationships between advertisers and premium publishers, bypassing intermediaries.",
+    "Magnite is the largest independent omnichannel sell-side advertising platform, with a major focus on premium CTV inventory.",
+    "Innovid provides measurement and personalization infrastructure for CTV campaigns across all major streaming platforms.",
+    "iSpot.tv, VideoAmp, and Comscore have all launched as alternative measurement currencies to Nielsen for cross-platform TV.",
+    "Nielsen's return following its 2021 MRC accreditation suspension was one of the most closely watched events in TV measurement history.",
+    "The MRC, or Media Rating Council, is the body that accredits measurement services used as trading currencies in US media.",
+    "Cross-platform measurement remains one of the most contested and unresolved issues in television advertising.",
+    "Outcome-based buying, in which advertisers pay for results rather than impressions, is growing in popularity for CTV campaigns.",
+    "Attention metrics, which measure how long viewers focus on an ad, have emerged as a complement to viewability metrics in CTV.",
+    "Co-viewing — multiple people watching the same CTV screen — creates measurement challenges since smart TV data tracks household, not individuals.",
+    "The average US adult watched approximately four hours and thirty minutes of television per day in 2023.",
+    "Binge-watching, defined as three or more episodes in a single session, is now the dominant content consumption pattern on streaming.",
+    "Short-form video on TikTok and YouTube Shorts is competing with long-form television for viewer attention, especially among Gen Z.",
+    "Live sports remain the most powerful tool for driving simultaneous large-scale audiences on both linear and streaming platforms.",
+    "The NFL accounted for 93 of the 100 most-watched television programs in the US in 2023.",
+    "NBCUniversal holds a significant portion of NFL broadcast rights through a multi-year agreement worth billions of dollars.",
+    "Sunday Night Football on NBC averaged over 18 million viewers per episode during the 2023 season.",
+    "Peacock's exclusive NFL playoff game in January 2024 set a new record for the most-streamed live sports event in US history.",
+    "NBCUniversal expanded its Big Ten college football coverage through a landmark long-term deal with the conference.",
+    "NBCUniversal regained a share of NBA broadcast rights starting in the 2025 season, ending the ABC/ESPN exclusive.",
+    "Golf content on NBC and the Golf Channel draws some of the most affluent audiences in US television advertising.",
+    "The Kentucky Derby has been broadcast on NBC since 1952, making it one of the longest-running sports rights deals in television.",
+    "Formula 1 racing has grown dramatically in US viewership since Netflix's Drive to Survive documentary launched in 2019.",
+    "Sports betting integration with live TV broadcasts has become a significant new revenue opportunity for networks including NBCUniversal.",
+    "Second-screen sports experiences — where viewers track stats and odds on a phone while watching TV — have driven companion app development.",
+    "Live news events such as election nights consistently drive the largest simultaneous streaming audiences outside of sports.",
+    "NBC News NOW, the network's free streaming news service, has expanded significantly as traditional cable news viewership has declined.",
+    "Over-the-top TV and CTV are often used interchangeably, though OTT technically refers to the delivery mechanism and CTV to the device.",
+    "Frequency management across linear and streaming has become a top priority for media buyers to avoid overexposing viewers to the same ad.",
+    "Dynamic ad insertion allows streaming platforms to replace or augment ads in live and on-demand content in real time.",
+    "Server-side ad insertion stitches ads directly into the video stream, reducing buffering and improving the viewer experience.",
+    "Ad-supported video on demand is the fastest-growing segment of the streaming market by advertising revenue.",
+    "Free, ad-supported TV channels — like Pluto TV and Tubi — are attracting cord-cutters who want free television without a subscription.",
+    "NBCUniversal's FAST channel strategy is integrated into Peacock's free tier, funded entirely by advertising.",
+    "Live linear streaming on FAST channels has seen surprising growth, suggesting viewers still want the lean-back experience of scheduled TV.",
+    "The global CTV advertising market is projected to reach $100 billion by 2030 according to multiple industry forecasts.",
+    "Video completion rate is one of the primary performance metrics for CTV advertising, typically exceeding 95% on premium platforms.",
+    "Brand safety in CTV is generally considered stronger than in social or user-generated content because inventory comes from premium publishers.",
+    "NBCUniversal's Peacock Advertising platform offers self-serve tools for mid-market advertisers to access premium CTV inventory.",
+    "Streaming ad loads are generally lower than linear, typically 4 to 5 minutes per hour versus 16 minutes per hour on cable.",
+    "Some research suggests that ads in streaming environments generate higher recall and brand lift than the same ads on linear television.",
+    "Interactive CTV ads, which allow viewers to engage with content using their remote, are growing in adoption across major platforms.",
+    "QR codes in TV commercials have seen a resurgence as a bridge between the television screen and mobile purchasing behavior.",
+    "Attribution models for CTV typically rely on device graph matching to connect ad exposures to web, app, or in-store actions.",
+    "Incrementality testing — running holdout groups — has become the gold standard for measuring the true causal impact of CTV advertising.",
+    "Multi-touch attribution models assign fractional credit to each ad touchpoint in a consumer's path to conversion.",
+    "Media mix modeling uses aggregate data to estimate the contribution of each channel, including CTV, to overall sales.",
+    "The integration of multi-touch attribution and media mix modeling is known as unified measurement and is being adopted by sophisticated advertisers.",
+    "NBCUniversal partnered with Accenture to build NBCUniversal Audience Insights, combining data science with media planning tools.",
+    "The television industry trades in GRPs, or Gross Rating Points, a measure of ad exposure that has been used since the 1950s.",
+    "The shift from GRP-based to impression-based trading is seen as foundational to true cross-platform measurement.",
+    "Reach and frequency are the two most basic metrics in media planning, measuring how many people saw an ad and how many times.",
+    "NBC's affiliate network includes over 200 local stations across the US, providing local news and national content distribution.",
+    "Retransmission consent fees, paid by cable and satellite operators to carry broadcast networks, have become a major revenue source for NBC affiliates.",
+    "Retransmission fees for the major broadcast networks collectively reached nearly $12 billion in 2022.",
+    "Cord-cutting — the cancellation of cable or satellite subscriptions — has accelerated since 2016, reaching over 25 million US households.",
+    "Pay TV subscribers in the US declined from a peak of over 100 million in 2012 to under 70 million by 2024.",
+    "NBC's owned-and-operated stations are among the most valuable broadcast properties in their respective local markets.",
+    "WNBC in New York is one of the most-watched local television stations in the United States.",
+    "Local television advertising remains a significant revenue source, particularly during election years when political spending spikes.",
+    "Political advertising on broadcast TV hit record levels in 2022 and 2024, with over $3 billion spent across local and national inventory.",
+    "The FCC's equal time rule requires broadcast stations like NBC affiliates to give equal airtime to competing political candidates.",
+    "Broadcast television is still subject to content regulations that do not apply to streaming platforms, including FCC decency standards.",
+    "NBCUniversal has been a leading advocate for advertising industry standards through participation in the IAB and 4A's.",
+    "The Coalition for Innovative Media Measurement was co-founded by NBCUniversal to advance cross-platform measurement standards.",
+    "Project OAR is an industry initiative to standardize addressable advertising across smart TV manufacturers.",
+    "NBCUniversal's One Platform data is built on a first-party identity graph drawn from over 200 million registered users.",
+    "Contextual targeting by content genre, daypart, and program type remains widely used in CTV buying despite the growth of data-driven methods.",
+    "Lookalike modeling uses seed audiences from first-party data to find statistically similar viewers across additional inventory.",
+    "Audience extension allows buyers to reach audiences identified on one platform across additional inventory in a publisher's ecosystem.",
+    "NBCUniversal's Campaign Suite provides measurement tools that track conversions tied to Peacock and linear ad exposure.",
+    "The TV upfront season takes place each spring, with networks presenting their fall schedules to advertisers in elaborate presentations.",
+    "NBCUniversal's upfront presentations are typically held at Radio City Music Hall in New York City.",
+    "The scatter market — buying TV ads after the upfront season — typically commands significantly higher CPMs than upfront pricing.",
+    "Programmatic guaranteed deals allow advertisers to lock in premium CTV inventory at a fixed price through automated systems.",
+    "Private marketplace deals are negotiated between a specific buyer and seller, offering premium inventory with programmatic execution.",
+    "Preferred deals give a single buyer first right of refusal on a publisher's inventory before it goes to open auction.",
+    "Supply path optimization is a practice where buyers reduce intermediaries between their DSP and a publisher's inventory.",
+    "DSPs such as The Trade Desk, DV360, and Amazon DSP are the primary tools through which agencies buy programmatic CTV inventory.",
+    "SSPs such as Magnite, PubMatic, and FreeWheel manage the sale of CTV publisher inventory to multiple demand sources simultaneously.",
+    "Ad verification in CTV has improved significantly with the adoption of VAST and VPAID standards across major platforms.",
+    "IAB Tech Lab's Open Measurement SDK provides a standardized way for third-party vendors to verify CTV ad delivery.",
+    "Invalid traffic in CTV, including ad spoofing and domain fraud, has become a growing concern for brand-safe inventory buyers.",
+    "NBCUniversal has committed to ads.txt and app-ads.txt standards to help buyers verify the legitimacy of its inventory.",
+    "The total addressable market for video advertising in the US is estimated at over $70 billion annually, with CTV taking an increasing share.",
+    "NBCUniversal's Universal Ads platform is designed to make premium TV advertising more accessible to brands of all sizes.",
+    "The broadcast TV upfront market transacts roughly $10 billion in advertising commitments each spring.",
+    "NBCUniversal's data-driven linear product allows advertisers to layer audience targeting onto traditional broadcast buys.",
+    "Streaming households watch an average of three to four streaming services simultaneously, creating a fragmented but rich ad environment.",
+    "The average CTV ad campaign in 2023 reached audiences across more than five different streaming apps or devices.",
+    "NBCUniversal's Peacock is the only major streaming platform that simulcasts live broadcast television.",
+    "NBCSN, the NBC Sports cable channel, was shut down at the end of 2021 as Comcast consolidated sports rights onto Peacock.",
+    "The Bravo network's Watch What Happens Live has aired over 2,000 episodes, making it one of cable's longest-running live late-night shows.",
+    "Universal Music Group, spun off from Vivendi and later NBCUniversal's orbit, is the world's largest record label.",
+    "The Universal lot in Universal City, California, has been used as a film production location since 1915.",
+    "NBCUniversal operates Universal Studios Hollywood, Universal Orlando, and international theme parks in Japan and Beijing.",
+    "Xfinity, Comcast's consumer brand, is the largest internet service provider in the United States.",
+    "Comcast's cable business has been investing in converged advertising products that link household broadband data with TV ad delivery.",
+    "The Peacock original series Bel-Air, a dramatic reimagining of The Fresh Prince of Bel-Air, debuted to strong streaming numbers in 2022.",
+    "NBC's The Voice has featured coaches including Adam Levine, Blake Shelton, Kelly Clarkson, and John Legend.",
+    "The Emmy Award for Outstanding Variety Talk Series has been won by NBC shows more than any other network over the past 30 years.",
+    "NBCUniversal's portfolio includes Spanish-language streaming through Peacock and Telemundo's digital platforms.",
+    "The One Platform Total Audience solution gives advertisers a single point of access to all NBCUniversal audience segments.",
+    "Peacock's free ad-supported tier has been a key driver of total registered user growth since the platform's 2020 launch.",
+    "CTV ad fraud rates are significantly lower than open web display advertising due to the walled-garden nature of most streaming platforms.",
+    "The average US streaming subscriber now pays for 3.4 services, down from a peak of 4.2 in 2022 as subscription fatigue grows.",
+    "NBCUniversal's news programming reaches more Americans daily than any other news organization in the country.",
+    "Late Night with Seth Meyers on NBC has won multiple Writers Guild of America Awards for its comedy writing staff.",
+    "The first televised presidential inauguration was broadcast by NBC in January 1949.",
+    "NBC Sports broadcast the first live national coverage of an NBA game in 1954, helping launch professional basketball's television era.",
+    "NBCU's Fandango, the movie ticketing and entertainment platform, reaches tens of millions of entertainment fans monthly.",
+    "NBCUniversal's content licensing business distributes programming to broadcasters in over 200 countries worldwide.",
+    "The NBCUniversal Media Village at 30 Rock in New York hosts studios, newsrooms, and broadcast facilities across multiple floors.",
+    "Peacock's integration with Comcast's X1 cable platform gives subscribers seamless access to streaming and linear content from one interface.",
+    "NBCUniversal's Digital Lab has launched dozens of ad technology pilots focused on measurement, targeting, and creative personalization.",
+    "The Super Bowl LII halftime show on NBC in 2018, featuring Justin Timberlake, drew over 103 million live viewers.",
+    "Universal Ads combines NBCUniversal's premium content reach with simplified buying tools to help local and regional advertisers compete nationally.",
 ]
 
 # ── Shared style values ────────────────────────────────────────────────────────
@@ -396,13 +308,39 @@ _TEXT = f"font-family:{_FONT};color:#1a202c"
 
 # ── HTML helpers ───────────────────────────────────────────────────────────────
 
+_ABBREVS = [
+    "Bros.", "Inc.", "Corp.", "Co.", "Ltd.", "LLC.", "U.S.", "vs.", "etc.",
+    "e.g.", "i.e.", "Mr.", "Mrs.", "Ms.", "Dr.", "Prof.", "St.", "Gov.",
+    "Sen.", "Rep.", "Gen.", "Sgt.", "No.", "Vol.", "Dept.", "Ave.", "Blvd.",
+]
+
+def _split_sentences(text: str) -> list[str]:
+    protected = text
+    subs: list[tuple[str, str]] = []
+    for i, abbr in enumerate(_ABBREVS):
+        ph = f"\x00A{i}\x00"
+        new = protected.replace(abbr, ph)
+        if new != protected:
+            subs.append((ph, abbr))
+            protected = new
+    parts = re.split(r'(?<=[.!?])\s+(?=[A-Z])', protected.strip())
+    result = []
+    for part in parts:
+        s = part.strip()
+        for ph, abbr in subs:
+            s = s.replace(ph, abbr)
+        if s:
+            result.append(s)
+    return result
+
+
 def _cap_sentences(text: str, n: int) -> str:
-    parts = re.split(r'(?<=[.!?])\s+', text.strip(), maxsplit=n)
+    parts = _split_sentences(text)
     return ' '.join(parts[:n])
 
 
 def _exec_summary_html(text: str) -> str:
-    sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', text.strip()) if s.strip()]
+    sentences = _split_sentences(text)
     if len(sentences) < 2:
         return (
             f'<p style="margin:0 0 8px;font-size:13px;line-height:1.5;'
@@ -707,16 +645,12 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
         1 for d in range((_today - _jan1).days + 1)
         if (_jan1 + timedelta(days=d)).weekday() < 5
     ) - 1
-    word_entry = WORDS_OF_THE_DAY[_weekday_index % len(WORDS_OF_THE_DAY)]
+    tv_fact = TV_FACTS[_weekday_index % len(TV_FACTS)]
     word_block_inner = (
-        f'<div style="font-size:22px;font-weight:800;color:#f07030;letter-spacing:-.3px;'
-        f'font-family:{_FONT}">{word_entry["word"]}</div>'
-        f'<div style="font-style:italic;color:#6b7280;font-size:11px;margin-top:4px;'
-        f'font-family:{_FONT}">{word_entry["pos"]}</div>'
-        f'<div style="color:#c9d1d9;font-size:13px;line-height:1.55;margin-top:9px;'
-        f'font-family:{_FONT}">{word_entry["definition"]}</div>'
-        f'<div style="font-style:italic;color:#8895a7;font-size:12px;line-height:1.5;'
-        f'margin-top:8px;font-family:{_FONT}">&ldquo;{word_entry["example"]}&rdquo;</div>'
+        f'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;'
+        f'color:#f07030;font-family:{_FONT}">Did You Know?</div>'
+        f'<div style="color:#c9d1d9;font-size:14px;line-height:1.6;margin-top:10px;'
+        f'font-family:{_FONT}">{tv_fact}</div>'
     )
     exec_summary = briefing.get("executive_summary", "No summary available.")
     key_themes   = briefing.get("key_themes", [])
@@ -787,7 +721,7 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
     <div style="color:#6b7280;font-size:12px;margin-top:4px;font-family:{_FONT}">{run_date} &bull; {article_count} articles analyzed</div>
   </div>
 
-  <!-- Word of the Day -->
+  <!-- Did You Know? -->
   <div style="background:#1a1a2e;padding:16px 32px 18px">
     {word_block_inner}
   </div>
