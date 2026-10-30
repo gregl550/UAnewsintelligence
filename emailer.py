@@ -303,7 +303,7 @@ TV_FACTS: list[str] = [
 
 # ── Shared style values ────────────────────────────────────────────────────────
 
-_FONT = "'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif"
+_FONT = "'Helvetica Neue',Helvetica,-apple-system,BlinkMacSystemFont,Arial,sans-serif"
 _TEXT = f"font-family:{_FONT};color:#1a202c"
 
 # ── HTML helpers ───────────────────────────────────────────────────────────────
@@ -451,7 +451,7 @@ def _section_wrap(heading: str, body: str) -> str:
     return (
         f'<div style="background:#fff;margin-top:8px">'
         f'<div style="padding:9px 32px;border-bottom:1px solid #edf2f7">'
-        f'<h2 style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.6px;'
+        f'<h2 style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:1px;'
         f'color:#003087;font-weight:700;font-family:{_FONT}">{heading}</h2>'
         f'</div>'
         f'{body}'
@@ -507,7 +507,7 @@ def _comp_intel_html(comp: dict) -> str:
 def _ua_partners_section(items: list[dict]) -> str:
     header = (
         f'<div style="background:#0d1b4b;padding:9px 32px">'
-        f'<h2 style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.6px;'
+        f'<h2 style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:1px;'
         f'color:#fff;font-weight:700;font-family:{_FONT}">UA Partners in the News</h2>'
         f'</div>'
     )
@@ -630,7 +630,7 @@ def _finance_corner_section(items: list[dict]) -> str:
     return (
         f'<div style="background:#f1f8e9;margin-top:8px">'
         f'<div style="padding:9px 32px;border-bottom:1px solid #c8e6c9;background:#1b5e20">'
-        f'<h2 style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.6px;'
+        f'<h2 style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:1px;'
         f'color:#fff;font-weight:700;font-family:{_FONT}">Gino&#8217;s Finance Corner &#128200;</h2>'
         f'</div>'
         f'{body}'
@@ -708,16 +708,16 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Universal Ads Intelligence Brief &#8212; {run_date}</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 </head>
 <body style="margin:0;padding:0;background:#f0f2f5;font-family:{_FONT};color:#1a202c">
 <div style="max-width:680px;margin:0 auto">
 
   <!-- Header -->
-  <div style="background:#0a0a0f;padding:22px 32px 16px">
-    <h1 style="color:#fff;margin:0;font-size:30px;font-weight:800;letter-spacing:-.5px;font-family:{_FONT}">Universal Ads</h1>
+  <div style="background:radial-gradient(ellipse at 30% 60%,rgba(120,40,140,.55) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(30,90,120,.5) 0%,transparent 55%),#060608;padding:22px 32px 16px">
+    <h1 style="color:#fff;margin:0;font-size:28px;font-weight:700;letter-spacing:-.8px;font-family:{_FONT}">Universal Ads</h1>
     <div style="height:4px;background:linear-gradient(90deg,#e8402a 0%,#f07030 50%,#4a7fd4 100%);border-radius:3px;margin:10px 0 9px"></div>
-    <div style="color:#9ca3af;font-size:13px;font-weight:400;margin:0 0 5px;font-family:{_FONT}">Daily Intelligence Briefing</div>
+    <div style="color:#9ca3af;font-size:11px;font-weight:400;letter-spacing:.8px;text-transform:uppercase;margin:0 0 5px;font-family:{_FONT}">Daily Intelligence Briefing</div>
     <div style="color:#6b7280;font-size:12px;margin-top:4px;font-family:{_FONT}">{run_date} &bull; {article_count} articles analyzed</div>
   </div>
 
