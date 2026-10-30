@@ -43,7 +43,7 @@ ANALYSIS PRIORITIES
    • Any new entrants or M&A that could reshape the self-serve CTV competitive landscape
 
 2. PARTNER & INTEGRATION SIGNALS
-   Measurement/attribution (iSpot, EDO, Innovid, Samba TV, Nielsen ONE), identity/data partners (LiveRamp, Experian, UID2), mobile measurement (Adjust, AppsFlyer, Branch, Kochava, Singular), creative tools, retail media integrations (Topsort, Koddi, retail media networks), DSP/SSP relationships
+   Measurement/attribution (iSpot, EDO, Innovid, Samba TV, Nielsen ONE), identity/data partners (LiveRamp, Experian, UID2), mobile measurement (AppsFlyer, Kochava, Singular), creative tools, retail media integrations (Topsort, Koddi, retail media networks), DSP/SSP relationships
 
 3. ADVERTISER TRENDS
    Budget migration to CTV, new advertiser verticals entering streaming, performance vs. brand spend shifts, self-serve adoption signals from SMBs or agencies
@@ -67,7 +67,7 @@ ANALYSIS PRIORITIES
    Spaceback, Canva, Creatify, Marpipe, Klaviyo, LiveRamp, TransUnion, Experian, Fospha,
    Northbeam, Stella, Adrsta.ai,
    Adlyse, Atrium, Concord, Kochava, Koddi, Olyzon, Orbee, Scale Up, SearchKings, Stellair AI, Topsort,
-   Adjust, AppsFlyer, Branch, Singular
+   AppsFlyer, Singular
    For each item: name the partner exactly, write a brief headline, and provide a 1-2 sentence
    insight on what the development means for the Universal Ads partnership or ecosystem (e.g.,
    funding that deepens a partner's capabilities, product launches that benefit UA advertisers,

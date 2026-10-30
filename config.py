@@ -52,7 +52,7 @@ RELEVANCE_KEYWORDS = [
     "Marpipe", "Klaviyo", "LiveRamp", "TransUnion", "Experian", "Fospha",
     "Northbeam", "Stella", "Adrsta.ai",
     "Adlyse", "Atrium", "Concord", "Kochava", "Koddi", "Olyzon", "Orbee", "SearchKings", "Stellair",
-    "Topsort", "Adjust", "AppsFlyer", "Branch", "Singular",
+    "Topsort", "AppsFlyer", "Singular",
     "retail media", "retail media network", "commerce media",
     # Other competitors
     "Tatari", "Roku", "Amazon", "Fire TV",
