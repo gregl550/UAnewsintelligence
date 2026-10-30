@@ -51,6 +51,9 @@ RELEVANCE_KEYWORDS = [
     "WorkMagic", "Triple Whale", "Waymark", "Spaceback", "Canva", "Creatify",
     "Marpipe", "Klaviyo", "LiveRamp", "TransUnion", "Experian", "Fospha",
     "Northbeam", "Stella", "Adrsta.ai",
+    "Adlyse", "Atrium", "Concord", "Kochava", "Koddi", "Olyzon", "Orbee", "SearchKings", "Stellair",
+    "Topsort", "Adjust", "AppsFlyer", "Branch", "Singular",
+    "retail media", "retail media network", "commerce media",
     # Other competitors
     "Tatari", "Roku", "Amazon", "Fire TV",
     "NBCU", "NBCUniversal", "Peacock", "Comcast",
