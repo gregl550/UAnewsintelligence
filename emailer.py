@@ -714,7 +714,7 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
 <div style="max-width:680px;margin:0 auto">
 
   <!-- Header -->
-  <div style="background:radial-gradient(ellipse at 30% 60%,rgba(120,40,140,.55) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(30,90,120,.5) 0%,transparent 55%),#060608;padding:22px 32px 16px">
+  <div style="background:#060608;background:radial-gradient(ellipse at 30% 60%,rgba(120,40,140,.55) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(30,90,120,.5) 0%,transparent 55%),#060608;padding:22px 32px 16px">
     <h1 style="color:#fff;margin:0;font-size:28px;font-weight:700;letter-spacing:-.8px;font-family:{_FONT}">Universal Ads</h1>
     <div style="height:4px;background:linear-gradient(90deg,#e8402a 0%,#f07030 50%,#4a7fd4 100%);border-radius:3px;margin:10px 0 9px"></div>
     <div style="color:#9ca3af;font-size:11px;font-weight:400;letter-spacing:.8px;text-transform:uppercase;margin:0 0 5px;font-family:{_FONT}">Daily Intelligence Briefing</div>
