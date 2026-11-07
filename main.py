@@ -56,7 +56,7 @@ def _load_previous_briefing() -> tuple[set[str], list[str], str]:
                 for item in competitor_items:
                     if item.get("url"):
                         seen_urls.add(item["url"])
-        for section in ["partner_signals", "advertiser_trends", "social_media", "uk_market", "policy_regulation", "finance_corner", "ua_partners"]:
+        for section in ["partner_signals", "advertiser_trends", "social_media", "uk_market", "policy_regulation", "market_signals", "ua_partners", "deals_signals"]:
             for item in briefing.get(section, []):
                 if item.get("url"):
                     seen_urls.add(item["url"])

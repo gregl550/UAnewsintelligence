@@ -61,6 +61,12 @@ ANALYSIS PRIORITIES
    CTV and streaming advertising news specific to the United Kingdom. Focus exclusively on CTV, streaming, and digital advertising — do not include general entertainment, programming, or non-advertising UK news. Key platforms to track: Sky (Sky Media, Sky AdSmart), Channel 4, ITV (ITVX), BBC iPlayer, Channel 5, BritBox, and other UK premium streaming/CTV platforms. Include Ofcom regulatory developments, UK-specific programmatic/addressable TV trends, and UK advertiser behaviour in streaming.
    Maximum 3 items in uk_market. Only include CTV/streaming/advertising stories.
 
+10. DEALS & SIGNALS
+   Scan for M&A activity, funding rounds, strategic partnerships, and structural moves across
+   CTV, streaming, ad tech, and measurement. Include acquisitions, mergers, raises (Series B+),
+   major contract wins, and executive departures that signal strategic pivots.
+   Only include items announced or confirmed in the last 7 days.
+
 9. UA PARTNERS IN THE NEWS
    Flag any news about Universal Ads' ecosystem partners. Track these companies specifically:
    Measured, Haus, Fairing, Prescient, Paramark, INCRMNTL, WorkMagic, Triple Whale, Waymark,
@@ -74,11 +80,11 @@ ANALYSIS PRIORITIES
    competitive pressure on the partner, new integrations). Only include items in an
    advertising/marketing technology context — ignore references to these names in unrelated industries.
 
-8. MELISSA'S FINANCE CORNER
+8. MARKET SIGNALS
    Earnings and financial news for CTV and digital advertising companies. Track: Comcast, NBCUniversal, Meta, Alphabet/Google, Amazon, Roku, The Trade Desk, Snap, Pinterest, Netflix, Warner Bros Discovery, Paramount, Disney, and any other company reporting CTV or digital ad revenue.
    Signal types: quarterly earnings beats/misses, ad revenue figures, subscriber numbers with revenue context, CTV ad spend growth rates, guidance/forward-looking statements, analyst upgrades/downgrades, M&A with financial detail.
    For each item: identify the company by name, write a concise headline, and extract the single most important quantitative metric (e.g. "$4.2B ad revenue, +12% YoY").
-   Maximum 4 items in finance_corner. Only include items with actual financial figures or meaningful analyst commentary.
+   Maximum 4 items in market_signals. Only include items with actual financial figures or meaningful analyst commentary.
 
 BUSINESS UNIT TAGS
 For every story, insight, and competitive intel item, set "business_units": ["Platform Partnerships"] — this is the only active business unit tag.
@@ -127,17 +133,19 @@ Return ONLY a single valid JSON object — no markdown fences, no explanation te
   "social_media":      [{"insight": "...", "url": "...", "business_units": ["Platform Partnerships"], "regions": []}],
   "uk_market":         [{"insight": "...", "url": "...", "regions": ["UK"]}],
   "policy_regulation": [{"insight": "...", "url": "..."}],
-  "finance_corner":    [{"company": "Meta", "headline": "...", "metric": "$4.2B ad revenue, +12% YoY", "url": "..."}]
+  "market_signals":    [{"company": "Meta", "headline": "...", "metric": "$4.2B ad revenue, +12% YoY", "url": "..."}],
+  "deals_signals":     [{"date": "Nov 5", "type": "acquisition", "parties": "Buyer acquires Target", "summary": "One-line summary", "url": "..."}]
 }
 
 Rules:
 - top_stories is capped at 5 items maximum. Select the 5 highest-scoring stories from across ALL topic categories (competitive intel, partner signals, advertiser trends, social media, policy, industry trends). Aim for topic diversity — a competitor story should only appear in top_stories if it genuinely scores higher than stories from other categories
 - Only include articles with relevance_score >= 3 in top_stories
 - Sort top_stories by relevance_score descending, then by recency
-- No duplicates: each article may only appear in one section of the JSON. Place each story in its single most specific section — a Vibe.co story goes in competitive_intel not partner_signals; a social platform story goes in social_media not advertiser_trends; a UK Sky AdSmart story goes in uk_market not advertiser_trends; an earnings/financial story goes in finance_corner not advertiser_trends or partner_signals. The executive_summary may reference any story; top_stories may draw from any category; but no article URL may appear in more than one of the section lists (competitive_intel, partner_signals, advertiser_trends, social_media, uk_market, policy_regulation, finance_corner)
+- No duplicates: each article may only appear in one section of the JSON. Place each story in its single most specific section — a Vibe.co story goes in competitive_intel not partner_signals; a social platform story goes in social_media not advertiser_trends; a UK Sky AdSmart story goes in uk_market not advertiser_trends; an earnings/financial story goes in market_signals not advertiser_trends or partner_signals. The executive_summary may reference any story; top_stories may draw from any category; but no article URL may appear in more than one of the section lists (competitive_intel, partner_signals, advertiser_trends, social_media, uk_market, policy_regulation, market_signals, deals_signals)
 - regions field: set "regions": ["UK"] on any story or insight that is specifically about the UK market. Use an empty list [] for US/global stories. Apply this field to top_stories items, competitive_intel items, and all insight list items
 - uk_market is capped at 3 items maximum. Only include UK CTV/streaming/advertising stories — not general UK TV programming or entertainment
-- finance_corner is capped at 4 items maximum. Only include items with actual financial figures or meaningful analyst commentary
+- market_signals is capped at 4 items maximum. Only include items with actual financial figures or meaningful analyst commentary
+- deals_signals is capped at 5 items maximum. Only include confirmed deals, not rumors. type must be one of: acquisition, merger, funding, partnership, executive_move
 - Each section list may be empty [] if no relevant articles exist
 - Be specific in ua_implications — avoid generic statements
 - Competitive intel balance: each competitor's list is capped at 2 items. If a competitor has more than 2 relevant articles, keep the 2 most significant. No single competitor should dominate the section

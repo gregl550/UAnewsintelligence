@@ -625,17 +625,63 @@ def _finance_corner_html(items: list[dict]) -> str:
     return table
 
 
-def _finance_corner_section(items: list[dict]) -> str:
+def _market_signals_section(items: list[dict]) -> str:
     body = _finance_corner_html(items)
     return (
         f'<div style="background:#f1f8e9;margin-top:8px">'
         f'<div style="padding:9px 32px;border-bottom:1px solid #c8e6c9;background:#1b5e20">'
         f'<h2 style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:1px;'
-        f'color:#fff;font-weight:700;font-family:{_FONT}">Gino&#8217;s Finance Corner &#128200;</h2>'
+        f'color:#fff;font-weight:700;font-family:{_FONT}">Gino&#8217;s Market Signals &#128200;</h2>'
         f'</div>'
         f'{body}'
         f'</div>'
     )
+
+
+def _deals_signals_section(items: list) -> str:
+    if not items:
+        return ""
+    type_labels = {
+        "acquisition":    ("ACQ",     "#7c3aed"),
+        "merger":         ("MERGER",  "#7c3aed"),
+        "funding":        ("FUNDING", "#059669"),
+        "partnership":    ("PARTNER", "#0369a1"),
+        "executive_move": ("EXEC",    "#b45309"),
+    }
+    rows = []
+    for item in items:
+        deal_type = item.get("type", "")
+        label, color = type_labels.get(deal_type, ("DEAL", "#6b7280"))
+        date    = item.get("date", "")
+        parties = item.get("parties", "")
+        summary = item.get("summary", "")
+        url     = item.get("url", "#")
+        rows.append(
+            f'<tr>'
+            f'<td style="padding:7px 0;vertical-align:top;width:68px">'
+            f'<span style="display:inline-block;padding:2px 7px;border-radius:3px;'
+            f'background:{color};color:#fff;font-size:10px;font-weight:700;'
+            f'font-family:{_FONT};letter-spacing:.4px">{label}</span>'
+            f'</td>'
+            f'<td style="padding:7px 0 7px 8px;vertical-align:top">'
+            f'<div style="font-size:13px;font-weight:600;line-height:1.3;font-family:{_FONT}">'
+            f'<a href="{url}" style="color:#1a202c;text-decoration:none">{parties}</a></div>'
+            f'<div style="font-size:12px;color:#6b7280;margin-top:1px;font-family:{_FONT}">{date} &bull; {summary}</div>'
+            f'</td></tr>'
+        )
+    rows_html = "".join(rows)
+    return f"""
+  <!-- Deals & Signals -->
+  <div style="background:#fff;margin-top:8px">
+    <div style="padding:9px 32px;border-bottom:1px solid #edf2f7">
+      <h2 style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#003087;font-weight:700;font-family:{_FONT}">Deals &amp; Signals</h2>
+    </div>
+    <div style="padding:8px 32px 12px">
+      <table style="width:100%;border-collapse:collapse">
+        {rows_html}
+      </table>
+    </div>
+  </div>"""
 
 
 def build_html(briefing: dict, article_count: int, run_date: str, sources: list[str]) -> str:
@@ -745,8 +791,10 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
   <!-- UA Partners in the News -->
   {_ua_partners_section(briefing.get("ua_partners", []))}
 
-  <!-- Finance Corner -->
-  {_finance_corner_section(briefing.get("finance_corner", []))}
+  <!-- Market Signals -->
+  {_market_signals_section(briefing.get("market_signals", []))}
+
+  {_deals_signals_section(briefing.get("deals_signals", []))}
 
   <!-- Other sections: Partner, Advertiser, Social, UK Market -->
   {other_sections}
