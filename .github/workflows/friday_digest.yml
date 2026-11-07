@@ -1,0 +1,30 @@
+name: UA Weekly Digest (Friday)
+
+on:
+  schedule:
+    # Every Friday at 8:30 AM ET (13:30 UTC)
+    - cron: "30 13 * * 5"
+  workflow_dispatch:   # allow manual runs
+
+jobs:
+  weekly-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run weekly digest
+        env:
+          ANTHROPIC_API_KEY:   ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_ADDRESS:       ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD:  ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL:     ${{ secrets.RECIPIENT_EMAIL }}
+          SENDER_NAME:         ${{ secrets.SENDER_NAME }}
+        run: python digest.py
