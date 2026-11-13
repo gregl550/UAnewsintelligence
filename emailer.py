@@ -691,13 +691,6 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
         1 for d in range((_today - _jan1).days + 1)
         if (_jan1 + timedelta(days=d)).weekday() < 5
     ) - 1
-    tv_fact = TV_FACTS[_weekday_index % len(TV_FACTS)]
-    word_block_inner = (
-        f'<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;'
-        f'color:#f07030;font-family:{_FONT}">Did You Know?</div>'
-        f'<div style="color:#c9d1d9;font-size:14px;line-height:1.6;margin-top:10px;'
-        f'font-family:{_FONT}">{tv_fact}</div>'
-    )
     exec_summary = briefing.get("executive_summary", "No summary available.")
     key_themes   = briefing.get("key_themes", [])
     top_stories  = briefing.get("top_stories", [])
@@ -769,7 +762,6 @@ def build_html(briefing: dict, article_count: int, run_date: str, sources: list[
 
   <!-- Did You Know? -->
   <div style="background:#1a1a2e;padding:16px 32px 18px">
-    {word_block_inner}
   </div>
 
   <!-- Executive summary -->
